@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">Blu Dragon</string>
+
+    <!--SIGNIN ACTIVITY -->
+    <string name="sign_in_text">Sign in</string>
+    <string name="sign_up_text">Sign up</string>
+    <string name="forgot_pwd_text">Forgot password?</string>
+    <string name="register_text">Create a new account</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+
+    <!--TIMELINE FRAGMENT -->
+    <string name="timeline">Timeline</string>
+    <string name="post_heading">What\'s on your mind?</string>
+    <string name="status">Status</string>
+    <string name="photos">Photos</string>
+    <string name="life_event">Life Event</string>
+
+    <!--NAVIGATION FRAGMENT -->
+    <string name="navigation">Navigation</string>
+    <string name="help_and_settings">Help and Settings</string>
+    <string name="settings">Settings</string>
+    <string name="app_options">App Options</string>
+
+    <!--FRIEND REQS FRAGMENT -->
+    <string name="friend_requests">Friend Requests</string>
+    <string name="confirm">Confirm</string>
+    <string name="delete">Delete</string>
+
+    <!--NOTIFICATION FRAGMENT -->
+    <string name="noticfications">Notifications</string>
+
+    <!--SETTINGS FRAGMENT -->
+    <string name="apply">Apply</string>
+    <string name="friends_only">Friends Only</string>
+
+    <!--CREATE POST FRAGMENT-->
+    <string name="post">Post</string>
+    <string name="post_success">Posted Successfully!</string>
+
+    <!--PROFILE FRAGMENT -->
+    <string name="edit">Edit</string>
+    <string name="posts">Posts</string>
+    <string name="see_all_friends">See all Friends</string>
+    <string name="update_info">Update Info</string>
+    <string name="user_profile">Profile</string>
+    <string name="profession">Profession: %1s</string>
+    <string name="location">Location: %1s</string>
+    <string name="about_me">About me: %1s</string>
+    <string name="interests">Interests: %1s</string>
+
+    <!--UPDATE PROFILE FRAGMENT -->
+    <string name="update_profile">Update Profile</string>
+
+    <!--MENU ITEM -->
+    <string name="done">Done</string>
+    <string name="title">Title</string>
+
+    <!--FRAGMENT TAGS-->
+    <string name="fragment_tag_profile">fragment_profile</string>
+    <string name="fragment_tag_settings">fragment_settings</string>
+    <string name="fragment_tag_create_post">fragment_create_post</string>
+    <string name="fragment_tag_update_profile">fragment_update_profile</string>
+
+
+</resources>
