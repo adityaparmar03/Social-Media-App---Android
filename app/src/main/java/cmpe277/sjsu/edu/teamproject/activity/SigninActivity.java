@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import cmpe277.sjsu.edu.teamproject.R;
 
@@ -16,7 +15,6 @@ public class SigninActivity extends AppCompatActivity {
     private Button signInButton, signUpButton;
     private EditText emailEditText, passwordEditText;
 
-    private TextView forgotPasswordButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +31,6 @@ public class SigninActivity extends AppCompatActivity {
 
         signInButton = (Button) findViewById(R.id.sign_in_button);
         signUpButton = (Button) findViewById(R.id.sign_up_button);
-
-        forgotPasswordButton = (TextView) findViewById(R.id.forgot_password_text_view);
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override

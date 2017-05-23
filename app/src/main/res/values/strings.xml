@@ -8,6 +8,7 @@
     <string name="register_text">Create a new account</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="verification_code">Verification Code</string>
 
     <!--TIMELINE FRAGMENT -->
     <string name="timeline">Timeline</string>
