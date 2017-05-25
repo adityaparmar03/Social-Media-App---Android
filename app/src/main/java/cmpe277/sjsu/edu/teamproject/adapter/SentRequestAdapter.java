@@ -45,53 +45,10 @@ public class SentRequestAdapter extends RecyclerView.Adapter<SentRequestAdapter.
         holder.deleteButton.setVisibility(View.GONE);
 
         Glide.with(context.getApplicationContext())
-                .load("IMAGE URL HERE")
+                .load(model.getProfileImageURL())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.profileImageView);
-
-
-//        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                FriendRequestConfirmReject friendRequestReject = new FriendRequestConfirmReject();
-//                friendRequestReject.setRequestor(model.getEmail());
-//                friendRequestReject.setSender(Session.LoggedEmail);
-//
-//                Retrofit retrofit = new Retrofit.Builder()
-//                        .baseUrl(context.getString(R.string.base_url))
-//                        .addConverterFactory(GsonConverterFactory.create())
-//                        .build();
-//
-//                FriendRequestService friendRequestService = retrofit.create(FriendRequestService.class);
-//
-//                Call<GenericPostResponse> callRejectFriendRequest = friendRequestService.rejectPendingFrndRequest(friendRequestReject);
-//                callRejectFriendRequest.enqueue(new Callback<GenericPostResponse>() {
-//                    @Override
-//                    public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
-//
-//                        if (response.body().getStatus().equals("200")) {
-//
-//                            sentRequestList.remove(position);
-//                            notifyItemRemoved(position);
-//                            notifyItemRangeChanged(position, sentRequestList.size());
-//                        } else {
-//
-//                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<GenericPostResponse> call, Throwable t) {
-//
-//                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//
-//        });
 
     }
 

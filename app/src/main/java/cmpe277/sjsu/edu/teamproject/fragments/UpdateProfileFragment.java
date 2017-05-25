@@ -82,7 +82,7 @@ public class UpdateProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_update_profile, container, false);
+        View view = inflater.inflate(R.layout.update_profile_fragment, container, false);
         setHasOptionsMenu(true);
 
         context = getActivity();
@@ -93,6 +93,20 @@ public class UpdateProfileFragment extends Fragment {
     }
 
     private void init(View view) {
+
+        TextView txtgalary = (TextView) view.findViewById(R.id.profile_photos_textview);
+        txtgalary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                gallery.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                if (gallery.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivityForResult(gallery, requestGallery);
+
+                }
+            }
+
+        });
 
     }
 
@@ -109,21 +123,6 @@ public class UpdateProfileFragment extends Fragment {
 
         TextView textView = (TextView) actionView.findViewById(R.id.title);
         textView.setText(getString(R.string.update_profile));
-
-        TextView txtgalary = (TextView) getActivity().findViewById(R.id.profile_photos_textview);
-        txtgalary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gallery=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                gallery.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                if(gallery.resolveActivity(getActivity().getPackageManager())!=null) {
-                    startActivityForResult(gallery,requestGallery);
-
-                }
-            }
-
-        });
-
     }
 
     private void setData()
@@ -178,8 +177,6 @@ public class UpdateProfileFragment extends Fragment {
 
     }
 
-
-
     public String uploadOnS3(File file)
     {
         Random rand = new Random();
@@ -205,6 +202,7 @@ public class UpdateProfileFragment extends Fragment {
         return s3ImageURL;
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==requestGallery && resultCode == RESULT_OK && data!=null) {

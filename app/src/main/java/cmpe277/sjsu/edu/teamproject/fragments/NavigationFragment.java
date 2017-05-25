@@ -76,14 +76,14 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.screen_name_textview:
 
-                Fragment profileFragment = ProfileFragment.getInstance();
+//                Fragment profileFragment = ProfileFragment.getInstance();
+                Fragment profileFragment = new ProfileFragment();
 
-                if (profileFragment != null) {
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.add(R.id.content_frame, profileFragment)
-                            .addToBackStack(getString(R.string.fragment_tag_profile));
-                    fragmentTransaction.commit();
-                }
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.content_frame, profileFragment)
+                        .addToBackStack(getString(R.string.fragment_tag_profile));
+                fragmentTransaction.commit();
+
 
                 break;
 
@@ -92,10 +92,10 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
                 Fragment settingsFragment = SettingsFragment.getInstance();
 
                 if (settingsFragment != null) {
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.add(R.id.content_frame, settingsFragment)
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.add(R.id.content_frame, settingsFragment)
                             .addToBackStack(getString(R.string.fragment_tag_settings));
-                    fragmentTransaction.commit();
+                    ft.commit();
                 }
 
                 break;
@@ -104,10 +104,10 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
                 Fragment sentRequestsFragment = SentRequestsFragment.getInstance();
 
                 if (sentRequestsFragment != null) {
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.add(R.id.content_frame, sentRequestsFragment)
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.add(R.id.content_frame, sentRequestsFragment)
                             .addToBackStack(getString(R.string.fragment_tag_sent_requests));
-                    fragmentTransaction.commit();
+                    ft.commit();
                 }
 
                 break;

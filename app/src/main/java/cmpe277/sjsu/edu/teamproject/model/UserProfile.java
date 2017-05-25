@@ -3,7 +3,6 @@ package cmpe277.sjsu.edu.teamproject.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfile {
@@ -31,7 +30,7 @@ public class UserProfile {
 
     private boolean online;
 
-    private List<Post> posts = new ArrayList<>();
+    private List<Post> posts;
 
     public String getScreenName() {
         return screenName;

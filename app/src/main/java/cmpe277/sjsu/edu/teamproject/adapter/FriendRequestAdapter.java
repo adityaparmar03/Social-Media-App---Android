@@ -51,14 +51,11 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
 
         holder.screenNameTextView.setText(model.getScreenName());
 
-        //holder.profileImageView
         Glide.with(context.getApplicationContext())
-                .load("IMAGE URL HERE")
+                .load(model.getProfileImageURL())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.profileImageView);
-
-
 
         holder.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override

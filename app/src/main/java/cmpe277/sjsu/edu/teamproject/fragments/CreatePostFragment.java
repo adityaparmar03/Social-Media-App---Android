@@ -83,6 +83,7 @@ public class CreatePostFragment extends Fragment {
         return view;
 
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -220,14 +221,13 @@ public class CreatePostFragment extends Fragment {
                 .error(R.mipmap.ic_launcher)
                 .into(imageView);
 
-
     }
 
     public void setData(){
 
-
         EditText content = (EditText) getActivity().findViewById(R.id.create_post_textview);
 
+        // TODO: also send screen name and profile pic
         PostPostBody postPostBody = new PostPostBody();
         postPostBody.setEmailId(Session.LoggedEmail);
         postPostBody.setContent(content.getText().toString());

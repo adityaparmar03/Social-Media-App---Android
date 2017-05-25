@@ -35,8 +35,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
-public class ProfileFragment extends Fragment {
+public class PublicProfileFragment extends Fragment {
 
     private Context context;
 
@@ -48,19 +47,6 @@ public class ProfileFragment extends Fragment {
     private UserProfile userProfile;
     private List<Post> userPosts = new ArrayList<>();
 
-    private static ProfileFragment fragment;
-
-    public static ProfileFragment getInstance() {
-        if(fragment == null)
-            fragment = new ProfileFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,10 +55,9 @@ public class ProfileFragment extends Fragment {
         setHasOptionsMenu(true);
         context = getActivity();
 
-        fetchUserProfile();
+        fetchPublicProfile();
 
         init(view);
-
         return view;
     }
 
@@ -88,26 +73,35 @@ public class ProfileFragment extends Fragment {
         interestsTextView = (TextView) profileHeaderView.findViewById(R.id.interests_textview);
         screenNameTextView = (TextView) profileHeaderView.findViewById(R.id.screen_name_textview);
 
-        // update info
-        View viewUpdateInfo = view.findViewById(R.id.option_two_layout);
-        viewUpdateInfo.setOnClickListener(new View.OnClickListener() {
+        // follow
+        View viewFollow = view.findViewById(R.id.option_one_layout);
+        viewFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = UpdateProfileFragment.getInstance(userProfile);
-                if (fragment != null) {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.add(R.id.content_frame, fragment).addToBackStack(getString
-                            (R.string.fragment_tag_update_profile));
-                    ft.commit();
-                }
+                // follow
             }
         });
 
-        TextView updateInfoTextView = (TextView) viewUpdateInfo.findViewById(R.id.option_two_textview);
-        updateInfoTextView.setText(getString(R.string.update_info));
+        TextView followTextView = (TextView) viewFollow.findViewById(R.id.option_one_textview);
+        followTextView.setText(getString(R.string.update_info));
 
-        ImageView updateInfoImageView = (ImageView) viewUpdateInfo.findViewById(R.id.option_two_imageview);
-        updateInfoImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.update_info));
+        ImageView followImageView = (ImageView) viewFollow.findViewById(R.id.option_one_imageview);
+        followImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.update_info));
+
+        // send friend request
+        View viewSendFriendReq = view.findViewById(R.id.option_two_layout);
+        viewSendFriendReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // send friend request
+            }
+        });
+
+        TextView SendFriendReqTextView = (TextView) viewSendFriendReq.findViewById(R.id.option_two_textview);
+        SendFriendReqTextView.setText(getString(R.string.update_info));
+
+        ImageView SendFriendReqImageView = (ImageView) viewSendFriendReq.findViewById(R.id.option_two_imageview);
+        SendFriendReqImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.update_info));
 
         // view all friends
         TextView seeAllFriendsText = (TextView) view.findViewById(R.id.see_all_friends_textview);
@@ -146,7 +140,7 @@ public class ProfileFragment extends Fragment {
         textView.setText(getString(R.string.user_profile));
     }
 
-    private void fetchUserProfile() {
+    private void fetchPublicProfile() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))

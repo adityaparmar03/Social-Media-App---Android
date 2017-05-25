@@ -44,11 +44,10 @@ public class SeeAllFriendsAdapter extends RecyclerView.Adapter<SeeAllFriendsAdap
         holder.confirmButton.setVisibility(View.GONE);
         holder.deleteButton.setVisibility(View.GONE);
         Glide.with(context.getApplicationContext())
-                .load("IMAGE URL HERE")
+                .load(model.getProfileImageURL())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.profileImageView);
-
 
     }
 

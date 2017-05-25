@@ -43,23 +43,25 @@ public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<TimelineRe
         holder.postTimeStampTextView.setText(model.getTimestamp());
         holder.postTitleTextView.setText(model.getContent());
 
+        Glide.with(context.getApplicationContext())
+                .load(model.getAuthorProfileImageUrl())
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(holder.authorImageView);
 
-
-        if (model.getMediaURL().equals("")) {
+        if (model.getMediaURL()==null || model.getMediaURL().equals("")) {
 
             holder.postImageView.setVisibility(View.GONE);
         } else {
 
             holder.postImageView.setVisibility(View.VISIBLE);
             Glide.with(context.getApplicationContext())
-                    .load("IMAGE URL HERE")
+                    .load(model.getMediaURL())
                     .placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
                     .into(holder.postImageView);
 
         }
-
-
 
     }
 
