@@ -26,7 +26,9 @@ public class SettingsFragment extends Fragment {
 
     private Switch publicSwitch;
     private Switch notificationsSwitch;
+    private Switch onlineSwitch;
     private Button applyButton;
+
 
     private static SettingsFragment fragment;
 
@@ -44,6 +46,7 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         publicSwitch = (Switch) view.findViewById(R.id.public_switch);
         notificationsSwitch = (Switch) view.findViewById(R.id.notifications_switch);
+        onlineSwitch = (Switch) view.findViewById(R.id.online_switch);
         applyButton = (Button) view.findViewById(R.id.apply_button);
 
         return view;
@@ -84,6 +87,8 @@ public class SettingsFragment extends Fragment {
                 if (response.body().getStatus().equals("200")) {
                     notificationsSwitch.setChecked(response.body().getNotification());
                     publicSwitch.setChecked(response.body().getVisibility());
+                    onlineSwitch.setChecked(response.body().getOnline());
+
 
                 } else {
 
@@ -111,6 +116,7 @@ public class SettingsFragment extends Fragment {
         settingsPostBody.setEmailid(Session.LoggedEmail);
         settingsPostBody.setVisibility(publicSwitch.isChecked());
         settingsPostBody.setNotification(notificationsSwitch.isChecked());
+        settingsPostBody.setOnline(onlineSwitch.isChecked());
 
         SettingsService settingsService = retrofit.create(SettingsService.class);
         Call<GenericPostResponse> callSettings = settingsService.updateSettings(settingsPostBody);

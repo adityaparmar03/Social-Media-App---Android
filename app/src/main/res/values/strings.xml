@@ -39,6 +39,7 @@
     <string name="apply">Apply</string>
 
     <string name="settingpublic">Public</string>
+    <string name="settingonline">Online</string>
 
     <!--CREATE POST FRAGMENT-->
     <string name="post">Post</string>

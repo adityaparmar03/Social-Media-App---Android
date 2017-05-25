@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import cmpe277.sjsu.edu.teamproject.R;
@@ -41,13 +43,23 @@ public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<TimelineRe
         holder.postTimeStampTextView.setText(model.getTimestamp());
         holder.postTitleTextView.setText(model.getContent());
 
-//        if (model.getMediaURL().equals("")) {
-//
-//            holder.postImageView.setVisibility(View.GONE);
-//        } else {
-//
-//            holder.postImageView.setVisibility(View.VISIBLE);
-//        }
+
+
+        if (model.getMediaURL().equals("")) {
+
+            holder.postImageView.setVisibility(View.GONE);
+        } else {
+
+            holder.postImageView.setVisibility(View.VISIBLE);
+            Glide.with(context.getApplicationContext())
+                    .load("IMAGE URL HERE")
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(holder.postImageView);
+
+        }
+
+
 
     }
 

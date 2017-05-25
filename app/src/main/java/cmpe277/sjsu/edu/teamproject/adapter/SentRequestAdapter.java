@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import cmpe277.sjsu.edu.teamproject.R;
@@ -41,6 +43,13 @@ public class SentRequestAdapter extends RecyclerView.Adapter<SentRequestAdapter.
         holder.screenNameTextView.setText(model.getScreenName());
         holder.confirmButton.setVisibility(View.GONE);
         holder.deleteButton.setVisibility(View.GONE);
+
+        Glide.with(context.getApplicationContext())
+                .load("IMAGE URL HERE")
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(holder.profileImageView);
+
 
 //        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
 //            @Override

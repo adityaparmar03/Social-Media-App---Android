@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,15 @@ import java.util.Date;
 import java.util.Random;
 
 import cmpe277.sjsu.edu.teamproject.R;
+import cmpe277.sjsu.edu.teamproject.Services.TimelineFeedService;
+import cmpe277.sjsu.edu.teamproject.model.GenericPostResponse;
+import cmpe277.sjsu.edu.teamproject.model.PostPostBody;
+import cmpe277.sjsu.edu.teamproject.model.Session;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,6 +62,7 @@ public class CreatePostFragment extends Fragment {
     static int requestGallery = 100;
 
     ImageView mImageView;
+    String s3ImageURL;
 
     public static CreatePostFragment getInstance() {
         if(fragment == null)
@@ -149,7 +160,7 @@ public class CreatePostFragment extends Fragment {
 
 
         URL url = amazonS3Client.generatePresignedUrl( urlRequest );
-        String s3ImageURL = getString(R.string.s3)+url.getPath();
+        s3ImageURL = getString(R.string.s3)+url.getPath();
 
         //Toast.makeText(getActivity(),s3ImageURL,Toast.LENGTH_LONG).show();
         return s3ImageURL;
@@ -213,9 +224,46 @@ public class CreatePostFragment extends Fragment {
     }
 
     public void setData(){
-        TextView screenname = (TextView)getActivity().findViewById(R.id.screen_name_text_view);
-        ImageView imageView = (ImageView) getActivity().findViewById(R.id.profile_pic_image_view);
-        TextView message = (TextView)getActivity().findViewById(R.id.create_post_textview);
+
+
+        EditText content = (EditText) getActivity().findViewById(R.id.create_post_textview);
+
+        PostPostBody postPostBody = new PostPostBody();
+        postPostBody.setEmailId(Session.LoggedEmail);
+        postPostBody.setContent(content.getText().toString());
+        postPostBody.setMediaURL(s3ImageURL);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TimelineFeedService postservice = retrofit.create(TimelineFeedService.class);
+        Call<GenericPostResponse> callpost = postservice.postPost(postPostBody);
+        callpost.enqueue(new Callback<GenericPostResponse>() {
+            @Override
+            public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+
+                switch (response.body().getStatus()) {
+
+                     case "200":
+                         Toast.makeText(getActivity(), "Post Successfully.", Toast.LENGTH_LONG).show();
+                         break;
+
+                     default:
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<GenericPostResponse> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 

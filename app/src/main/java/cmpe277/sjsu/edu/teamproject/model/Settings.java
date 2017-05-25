@@ -7,6 +7,15 @@ public class Settings {
     private String msg;
     private Boolean visibility;
     private Boolean notification;
+    private Boolean online;
+
+    public Boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
+    }
 
     public String getStatus() {
         return status;

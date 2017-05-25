@@ -6,6 +6,9 @@ public class SettingsPostBody {
     private String emailid;
     private Boolean visibility;
     private Boolean notification;
+    private Boolean online;
+
+
 
     public String getEmailid() {
         return emailid;
@@ -29,5 +32,13 @@ public class SettingsPostBody {
 
     public void setVisibility(Boolean visibility) {
         this.visibility = visibility;
+    }
+
+    public Boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
     }
 }

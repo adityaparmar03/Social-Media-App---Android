@@ -14,10 +14,12 @@ import android.widget.Toast;
 import cmpe277.sjsu.edu.teamproject.R;
 import cmpe277.sjsu.edu.teamproject.Services.SignInService;
 import cmpe277.sjsu.edu.teamproject.Services.SignUpService;
+import cmpe277.sjsu.edu.teamproject.Services.VerifyoptService;
 import cmpe277.sjsu.edu.teamproject.model.GenericPostResponse;
 import cmpe277.sjsu.edu.teamproject.model.Session;
 import cmpe277.sjsu.edu.teamproject.model.SignInRequest;
 import cmpe277.sjsu.edu.teamproject.model.SignUpRequest;
+import cmpe277.sjsu.edu.teamproject.model.Verifyopt;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +31,8 @@ public class SigninActivity extends AppCompatActivity {
 
     private Button signInButton, signUpButton;
     private EditText emailEditText, passwordEditText;
+    Boolean ISverified=true;
+    Boolean result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,52 +66,113 @@ public class SigninActivity extends AppCompatActivity {
                 signInRequest.setEmailid(emailEditText.getText().toString());
                 signInRequest.setPassword(passwordEditText.getText().toString());
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                if(!ISverified)
+                {
+                    checkverificationcode();
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(getString(R.string.base_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
 
-                SignInService signInService = retrofit.create(SignInService.class);
+                    SignInService signInService = retrofit.create(SignInService.class);
 
-                Call<GenericPostResponse> callSignIn = signInService.signIn(signInRequest);
+                    Call<GenericPostResponse> callSignIn = signInService.signIn(signInRequest);
 
-                callSignIn.enqueue(new Callback<GenericPostResponse>() {
-                   @Override
-                   public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+                    callSignIn.enqueue(new Callback<GenericPostResponse>() {
+                        @Override
+                        public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
 
-                       switch (response.body().getStatus()) {
+                            switch (response.body().getStatus()) {
 
-                           case "200":
-                               if (didSetSharedPreference(emailEditText.getText().toString(), passwordEditText.getText().toString())) {
+                                case "200":
+                                    if (didSetSharedPreference(emailEditText.getText().toString(), passwordEditText.getText().toString())) {
 
-                                   Toast.makeText(SigninActivity.this, "Successfully logged In.", Toast.LENGTH_LONG).show();
-                                   startActivity(new Intent(SigninActivity.this, MainActivity.class));
-                                   finish();
+                                        Toast.makeText(SigninActivity.this, "Successfully logged In.", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(SigninActivity.this, MainActivity.class));
+                                        finish();
 
-                               } else {
-                                   Toast.makeText(SigninActivity.this, "Something went wrong.", Toast.LENGTH_LONG).show();
-                               }
-                               break;
+                                    } else {
+                                        Toast.makeText(SigninActivity.this, "Something went wrong.", Toast.LENGTH_LONG).show();
+                                    }
+                                    break;
 
-                           case "300":
-                               Toast.makeText(SigninActivity.this, "Verification Required.", Toast.LENGTH_LONG).show();
-                               break;
+                                case "300":
+                                    Toast.makeText(SigninActivity.this, "Verification Required.", Toast.LENGTH_LONG).show();
+                                    EditText edverify  = (EditText) findViewById(R.id.verification_code_edit_text);
+                                    edverify.setVisibility(View.VISIBLE);
+                                    ISverified = false;
+                                    break;
 
-                           default:
-                               Toast.makeText(SigninActivity.this, "Use right credentials.", Toast.LENGTH_LONG).show();
-                               break;
+                                default:
+                                    Toast.makeText(SigninActivity.this, "Use right credentials.", Toast.LENGTH_LONG).show();
+                                    break;
 
-                       }
+                            }
 
-                   }
+                        }
 
-                   @Override
-                   public void onFailure(Call<GenericPostResponse> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<GenericPostResponse> call, Throwable t) {
 
-                       Toast.makeText(SigninActivity.this,"Something went wrong,Try After sometime", Toast.LENGTH_LONG).show();
-                   }
+                            Toast.makeText(SigninActivity.this,"Something went wrong,Try After sometime", Toast.LENGTH_LONG).show();
+                        }
 
-                });
+                    });
+                }
+                else
+                {
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(getString(R.string.base_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    SignInService signInService = retrofit.create(SignInService.class);
+
+                    Call<GenericPostResponse> callSignIn = signInService.signIn(signInRequest);
+
+                    callSignIn.enqueue(new Callback<GenericPostResponse>() {
+                        @Override
+                        public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+
+                            switch (response.body().getStatus()) {
+
+                                case "200":
+                                    if (didSetSharedPreference(emailEditText.getText().toString(), passwordEditText.getText().toString())) {
+
+                                        Toast.makeText(SigninActivity.this, "Successfully logged In.", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(SigninActivity.this, MainActivity.class));
+                                        finish();
+
+                                    } else {
+                                        Toast.makeText(SigninActivity.this, "Something went wrong.", Toast.LENGTH_LONG).show();
+                                    }
+                                    break;
+
+                                case "300":
+                                    Toast.makeText(SigninActivity.this, "Verification Required.", Toast.LENGTH_LONG).show();
+                                    EditText edverify  = (EditText) findViewById(R.id.verification_code_edit_text);
+                                    edverify.setVisibility(View.VISIBLE);
+                                    ISverified = false;
+                                    break;
+
+                                default:
+                                    Toast.makeText(SigninActivity.this, "Use right credentials.", Toast.LENGTH_LONG).show();
+                                    break;
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<GenericPostResponse> call, Throwable t) {
+
+                            Toast.makeText(SigninActivity.this,"Something went wrong,Try After sometime", Toast.LENGTH_LONG).show();
+                        }
+
+                    });
+                }
+
+
 
             }
         });
@@ -203,6 +268,55 @@ public class SigninActivity extends AppCompatActivity {
 
             return false;
         }
+    }
+
+    private Boolean checkverificationcode()
+    {
+        EditText edverify  = (EditText) findViewById(R.id.verification_code_edit_text);
+        EditText email  = (EditText) findViewById(R.id.email_edit_text);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Verifyopt verifyopt =  new Verifyopt();
+        verifyopt.setEmailid(email.getText().toString());
+        verifyopt.setOtp(edverify.getText().toString());
+
+        VerifyoptService verifyoptService = retrofit.create(VerifyoptService.class);
+        Call<GenericPostResponse> callverifycode = verifyoptService.verify(verifyopt);
+
+        callverifycode.enqueue(new Callback<GenericPostResponse>() {
+            @Override
+            public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+
+                switch (response.body().getStatus()) {
+
+                    case "200":
+                        Toast.makeText(SigninActivity.this, "Verification complete.", Toast.LENGTH_LONG).show();
+                        result = true;
+                        break;
+
+                    default:
+                        Toast.makeText(SigninActivity.this, "something went wrong", Toast.LENGTH_LONG).show();
+                        result = false;
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GenericPostResponse> call, Throwable t) {
+
+                Toast.makeText(SigninActivity.this,"something went wrong, Try again after sometime.",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+
+        return result;
     }
 
 }

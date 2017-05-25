@@ -28,16 +28,27 @@
             android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/tx_update_profile_email"
-                    android:layout_width="match_parent"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/searchemailscreenname"
                     android:inputType="text" />
+
+
             </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/button"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimary"
+                android:text="@string/search"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
 
 
 
@@ -55,22 +66,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-            //Add Recycleview here
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_height="wrap_content"/>
 
         </ScrollView>
 
 
 
 </LinearLayout>
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:text="@string/search"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white" />
+
 
 
 
