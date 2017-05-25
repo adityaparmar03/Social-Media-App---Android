@@ -17,31 +17,37 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.bumptech.glide.Glide;
 
 import cmpe277.sjsu.edu.teamproject.R;
+import cmpe277.sjsu.edu.teamproject.Services.ProfileService;
 import cmpe277.sjsu.edu.teamproject.adapter.TimelineRecyclerViewAdapter;
-import cmpe277.sjsu.edu.teamproject.model.Post;
-import cmpe277.sjsu.edu.teamproject.model.ProfileModel;
+import cmpe277.sjsu.edu.teamproject.model.Session;
+import cmpe277.sjsu.edu.teamproject.model.UserProfile;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ProfileFragment extends Fragment {
 
     private Context context;
 
-    private ImageView coverPicImageView, profilePicImageView;
-    private TextView locationTextView, professionTextView, screenNameTextView;
-    private RecyclerView recyclerView;
+    private ImageView profilePicImageView;
+    private TextView locationTextView, professionTextView, screenNameTextView, aboutMeTextView,
+            interestsTextView;
 
-    private static ProfileModel mProfileModel;
+    private TimelineRecyclerViewAdapter timelineRecyclerViewAdapter;
+    private UserProfile userProfile;
+
     private static ProfileFragment fragment;
 
-    public static ProfileFragment getInstance(ProfileModel profileModel) {
+    public static ProfileFragment getInstance() {
         if(fragment == null)
             fragment = new ProfileFragment();
-        mProfileModel = profileModel;
         return fragment;
     }
 
@@ -56,31 +62,11 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
         setHasOptionsMenu(true);
-
         context = getActivity();
 
+        fetchUserProfile();
+
         init(view);
-
-        professionTextView.setText(getString(R.string.profession, mProfileModel.getProfession()));
-        locationTextView.setText(getString(R.string.location, mProfileModel.getLocation()));
-
-
-
-        ArrayList<Post> modelList = new ArrayList<>();
-
-        // dummy data
-//        for(int i=0;i<10;i++)
-//        {
-//            Post model = new Post();
-//            model.setMessage("Sample FB post");
-//            model.setScreenname("Screen Name");
-//            model.setDatetime("5th may 2017");
-//            model.setMedia(" ");
-//            modelList.add(model);
-//        }
-
-        TimelineRecyclerViewAdapter adapter = new TimelineRecyclerViewAdapter(context, modelList);
-        recyclerView.setAdapter(adapter);
 
         return view;
     }
@@ -90,10 +76,11 @@ public class ProfileFragment extends Fragment {
         View profileHeaderView = view.findViewById(R.id.layout_profile_header);
 
         profilePicImageView = (ImageView) profileHeaderView.findViewById(R.id.profile_pic_imageview);
-        coverPicImageView = (ImageView) profileHeaderView.findViewById(R.id.cover_pic_imageview);
 
         locationTextView = (TextView) profileHeaderView.findViewById(R.id.location_textview);
         professionTextView = (TextView) profileHeaderView.findViewById(R.id.profession_textview);
+        aboutMeTextView = (TextView) profileHeaderView.findViewById(R.id.about_me_textview);
+        interestsTextView = (TextView) profileHeaderView.findViewById(R.id.interests_textview);
         screenNameTextView = (TextView) profileHeaderView.findViewById(R.id.screen_name_textview);
 
         // update info
@@ -101,7 +88,7 @@ public class ProfileFragment extends Fragment {
         viewUpdateInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = UpdateProfileFragment.newInstance(mProfileModel);
+                Fragment fragment = UpdateProfileFragment.getInstance(userProfile);
                 if (fragment != null) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.add(R.id.content_frame, fragment).addToBackStack(getString
@@ -118,17 +105,26 @@ public class ProfileFragment extends Fragment {
         updateInfoImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.update_info));
 
         // view all friends
-        TextView seeAllFriendsText = (TextView) profileHeaderView.findViewById(R.id.see_all_friends_textview);
+        TextView seeAllFriendsText = (TextView) view.findViewById(R.id.see_all_friends_textview);
         seeAllFriendsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), getString(R.string.see_all_friends), Toast.LENGTH_SHORT).show();
+                Fragment fragment = SeeAllFriendsFragment.getInstance();
+                if (fragment != null) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.add(R.id.content_frame, fragment).addToBackStack(getString
+                            (R.string.fragment_tag_see_all_friends));
+                    ft.commit();
+                }
             }
         });
 
         // user posts
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
+
+        timelineRecyclerViewAdapter = new TimelineRecyclerViewAdapter(context, userProfile.getPosts());
+        recyclerView.setAdapter(timelineRecyclerViewAdapter);
     }
 
     @Override
@@ -143,6 +139,47 @@ public class ProfileFragment extends Fragment {
 
         TextView textView = (TextView) actionView.findViewById(R.id.title);
         textView.setText(getString(R.string.user_profile));
+    }
+
+    private void fetchUserProfile() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ProfileService profileService = retrofit.create(ProfileService.class);
+
+        Call<UserProfile> callFetchUserProfile = profileService.getUserProfile(Session.LoggedEmail);
+
+        callFetchUserProfile.enqueue(new Callback<UserProfile>() {
+
+            @Override
+            public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
+
+                userProfile = response.body();
+
+                professionTextView.setText(getString(R.string.profession, userProfile.getProfession()));
+                locationTextView.setText(getString(R.string.location, userProfile.getLocation()));
+                aboutMeTextView.setText(getString(R.string.about_me, userProfile.getAboutMe()));
+                interestsTextView.setText(getString(R.string.interests, userProfile.getInterests()));
+                screenNameTextView.setText(userProfile.getScreenName());
+
+                Glide.with(context)
+                        .load(userProfile.getProfileImageURL())
+                        .error(R.mipmap.ic_launcher)
+                        .into(profilePicImageView);
+
+                timelineRecyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<UserProfile> call, Throwable t) {
+
+            }
+
+        });
+
     }
 
 }

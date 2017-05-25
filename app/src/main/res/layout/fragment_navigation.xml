@@ -51,7 +51,7 @@
             android:scaleType="fitXY"/>
 
         <TextView
-            android:id="@+id/app_settings_textview"
+            android:id="@+id/settings_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -67,6 +67,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp">
+
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -74,15 +75,16 @@
             android:scaleType="fitXY"/>
 
         <TextView
-            android:id="@+id/tx_terms_policies"
+            android:id="@+id/sent_requests_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Terms And Policies"
+            android:text="Sent Requests"
             android:textSize="18dp"
             android:padding="10dp"
             android:layout_gravity="center"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -90,6 +92,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp">
+
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -97,7 +100,7 @@
             android:scaleType="fitXY"/>
 
         <TextView
-            android:id="@+id/tx_about"
+            android:id="@+id/about_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="About"
@@ -107,11 +110,13 @@
             android:gravity="center_vertical"
             android:drawablePadding="5dp"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp">
+
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -119,16 +124,16 @@
             android:scaleType="fitXY" />
 
         <TextView
-            android:id="@+id/tx_logout"
+            android:id="@+id/logout_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log Out"
+            android:drawablePadding="5dp"
             android:textSize="18dp"
             android:padding="10dp"
             android:layout_gravity="center"
             android:gravity="center_vertical"
-            android:drawablePadding="5dp"
-            android:onClick="logout"/>
+            android:text="Logout" />
+
     </LinearLayout>
 
 

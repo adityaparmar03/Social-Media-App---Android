@@ -41,13 +41,13 @@ public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<TimelineRe
         holder.postTimeStampTextView.setText(model.getTimestamp());
         holder.postTitleTextView.setText(model.getContent());
 
-        if (model.getMediaURL().equals("")) {
-
-            holder.postImageView.setVisibility(View.GONE);
-        } else {
-
-            holder.postImageView.setVisibility(View.VISIBLE);
-        }
+//        if (model.getMediaURL().equals("")) {
+//
+//            holder.postImageView.setVisibility(View.GONE);
+//        } else {
+//
+//            holder.postImageView.setVisibility(View.VISIBLE);
+//        }
 
     }
 

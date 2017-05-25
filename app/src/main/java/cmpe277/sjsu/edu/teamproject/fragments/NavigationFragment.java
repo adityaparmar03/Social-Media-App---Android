@@ -1,5 +1,8 @@
 package cmpe277.sjsu.edu.teamproject.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,8 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import cmpe277.sjsu.edu.teamproject.R;
-import cmpe277.sjsu.edu.teamproject.model.Session;
-import cmpe277.sjsu.edu.teamproject.model.ProfileModel;
+import cmpe277.sjsu.edu.teamproject.activity.SigninActivity;
 
 public class NavigationFragment extends Fragment implements View.OnClickListener {
 
@@ -30,7 +32,7 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         return fragment;
     }
 
-    private TextView screenNameTextView, appSettingTextView;
+    private TextView screenNameTextView, appSettingTextView, logoutTextView, sentRequestsTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,10 +43,14 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         setHasOptionsMenu(true);
 
         screenNameTextView = (TextView) rootView.findViewById(R.id.screen_name_textview);
-        appSettingTextView = (TextView) rootView.findViewById(R.id.app_settings_textview);
+        appSettingTextView = (TextView) rootView.findViewById(R.id.settings_textview);
+        logoutTextView = (TextView) rootView.findViewById(R.id.logout_textview);
+        sentRequestsTextView = (TextView) rootView.findViewById(R.id.sent_requests_textview);
+
 
         screenNameTextView.setOnClickListener(this);
         appSettingTextView.setOnClickListener(this);
+        logoutTextView.setOnClickListener(this);
 
         return rootView;
     }
@@ -69,44 +75,57 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         //initializing the fragment object which is selected
         switch (v.getId()) {
             case R.id.screen_name_textview:
-                ProfileModel model = new ProfileModel();
-                model.setEmailid(Session.LoggedEmail);
-                model.setScreenname("KING");
-                model.setProfilepic("");
-                model.setLocation("San Jose");
-                model.setAboutme("I m cool");
-                model.setInterests(new String[]{"Movie","sports"});
 
-                Fragment profileFragment = ProfileFragment.getInstance(new ProfileModel());
+                Fragment profileFragment = ProfileFragment.getInstance();
 
-                //replacing the fragment
                 if (profileFragment != null) {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.add(R.id.content_frame, profileFragment)
                             .addToBackStack(getString(R.string.fragment_tag_profile));
                     fragmentTransaction.commit();
                 }
+
                 break;
 
-            case R.id.app_settings_textview:
+            case R.id.settings_textview:
 
                 Fragment settingsFragment = SettingsFragment.getInstance();
 
-                //replacing the fragment
                 if (settingsFragment != null) {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.add(R.id.content_frame, settingsFragment)
                             .addToBackStack(getString(R.string.fragment_tag_settings));
                     fragmentTransaction.commit();
                 }
+
                 break;
 
+            case R.id.sent_requests_textview:
+                Fragment sentRequestsFragment = SentRequestsFragment.getInstance();
 
+                if (sentRequestsFragment != null) {
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.add(R.id.content_frame, sentRequestsFragment)
+                            .addToBackStack(getString(R.string.fragment_tag_sent_requests));
+                    fragmentTransaction.commit();
+                }
 
+                break;
 
+            case R.id.logout_textview:
+
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("logindata",
+                        Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                Intent i = new Intent(getActivity(), SigninActivity.class);
+                startActivity(i);
+                getActivity().finish();
+
+                break;
 
         }
-
 
     }
 

@@ -9,6 +9,8 @@ public class Post {
     @Expose
     private String authorName;
 
+    @SerializedName("profile_pic")
+    @Expose
     private String authorProfileImageUrl;
 
     private String timestamp;
@@ -17,6 +19,8 @@ public class Post {
     @Expose
     private String mediaURL;
 
+    @SerializedName("contents")
+    @Expose
     private String content;
 
 

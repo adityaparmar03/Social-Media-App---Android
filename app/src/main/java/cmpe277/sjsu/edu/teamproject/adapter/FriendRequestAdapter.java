@@ -49,8 +49,6 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
 
         holder.screenNameTextView.setText(model.getScreenName());
 
-        //holder.profileImageView
-
         holder.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

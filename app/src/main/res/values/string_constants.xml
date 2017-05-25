@@ -3,10 +3,12 @@
     <!--FRAGMENT TAGS-->
     <string name="fragment_tag_profile">fragment_profile</string>
     <string name="fragment_tag_settings">fragment_settings</string>
+    <string name="fragment_tag_sent_requests">fragment_sent_requests</string>
     <string name="fragment_tag_create_post">fragment_create_post</string>
     <string name="fragment_tag_update_profile">fragment_update_profile</string>
+    <string name="fragment_tag_see_all_friends">fragment_see_all_friends</string>
 
-    <string name="ip">http://54.200.252.246:5500</string>
+    <string name="base_url">http://54.200.252.246:5500</string>
     <string name="s3">https://s3-us-west-2.amazonaws.com/cmpe277</string>
     <string name="somethingwentwrong">Something went wrong, Try again after some time !</string>
 </resources>

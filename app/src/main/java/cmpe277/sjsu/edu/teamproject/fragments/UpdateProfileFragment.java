@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import cmpe277.sjsu.edu.teamproject.R;
-import cmpe277.sjsu.edu.teamproject.model.ProfileModel;
+import cmpe277.sjsu.edu.teamproject.model.UserProfile;
 
 
 public class UpdateProfileFragment extends Fragment {
@@ -23,12 +23,12 @@ public class UpdateProfileFragment extends Fragment {
     private Context context;
 
     private static UpdateProfileFragment fragment;
-    private static ProfileModel mProfileModel;
+    private static UserProfile userProfile;
 
-    public static UpdateProfileFragment newInstance(ProfileModel profileModel) {
+    public static UpdateProfileFragment getInstance(UserProfile userProfile) {
         if(fragment==null)
             fragment = new UpdateProfileFragment();
-        mProfileModel = profileModel;
+        UpdateProfileFragment.userProfile = userProfile;
         return fragment;
     }
 

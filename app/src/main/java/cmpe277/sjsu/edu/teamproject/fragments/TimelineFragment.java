@@ -24,7 +24,6 @@ import cmpe277.sjsu.edu.teamproject.Services.TimelineFeedService;
 import cmpe277.sjsu.edu.teamproject.adapter.TimelineRecyclerViewAdapter;
 import cmpe277.sjsu.edu.teamproject.model.Post;
 import cmpe277.sjsu.edu.teamproject.model.Session;
-import cmpe277.sjsu.edu.teamproject.model.Timeline;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,7 +67,7 @@ public class TimelineFragment extends Fragment {
         createPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment createPostFragment = CreatePostFragment.newInstance();
+                Fragment createPostFragment = CreatePostFragment.getInstance();
                 if (createPostFragment != null) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.add(R.id.content_frame, createPostFragment).addToBackStack(getString(R.string.fragment_tag_create_post));
@@ -103,19 +102,19 @@ public class TimelineFragment extends Fragment {
 
         TimelineFeedService timelineFeedService = retrofit.create(TimelineFeedService.class);
 
-        Call<Timeline> callGetTimelineFeed = timelineFeedService.getFeed(Session.LoggedEmail);
+        Call<List<Post>> callGetTimelineFeed = timelineFeedService.getFeed(Session.LoggedEmail);
 
-        callGetTimelineFeed.enqueue(new Callback<Timeline>() {
+        callGetTimelineFeed.enqueue(new Callback<List<Post>>() {
 
             @Override
-            public void onResponse(Call<Timeline> call, Response<Timeline> response) {
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
 
-                listOfPosts = response.body().getPosts();
+                listOfPosts = response.body();
                 recyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<Timeline> call, Throwable t) {
+            public void onFailure(Call<List<Post>> call, Throwable t) {
 
             }
 

@@ -47,14 +47,13 @@ public class CreatePostFragment extends Fragment {
 
     private static CreatePostFragment fragment;
 
-
     private static Uri selectedImage;
     private static String imgPath="";
     static int requestGallery = 100;
 
     ImageView mImageView;
 
-    public static CreatePostFragment newInstance() {
+    public static CreatePostFragment getInstance() {
         if(fragment == null)
             fragment = new CreatePostFragment();
 
@@ -130,13 +129,9 @@ public class CreatePostFragment extends Fragment {
 
         });
 
-
-
-
     }
 
-    public String uploadOnS3(File file)
-    {
+    public String uploadOnS3(File file) {
         Random rand = new Random();
         int  randomNo = rand.nextInt(999999) + 1;
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -158,8 +153,8 @@ public class CreatePostFragment extends Fragment {
 
         //Toast.makeText(getActivity(),s3ImageURL,Toast.LENGTH_LONG).show();
         return s3ImageURL;
-
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==requestGallery && resultCode == RESULT_OK && data!=null) {
@@ -186,9 +181,9 @@ public class CreatePostFragment extends Fragment {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            }
-            else
-            {
+
+            } else {
+
                 Toast.makeText(getActivity(),getString(R.string.somethingwentwrong),Toast.LENGTH_LONG).show();
             }
 
@@ -196,6 +191,7 @@ public class CreatePostFragment extends Fragment {
         }
 
     }
+
     public String getRealPathFromURI(Uri uri) {
         Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
@@ -215,12 +211,11 @@ public class CreatePostFragment extends Fragment {
 
 
     }
+
     public void setData(){
         TextView screenname = (TextView)getActivity().findViewById(R.id.screen_name_text_view);
         ImageView imageView = (ImageView) getActivity().findViewById(R.id.profile_pic_image_view);
         TextView message = (TextView)getActivity().findViewById(R.id.create_post_textview);
-
-
     }
 
 
