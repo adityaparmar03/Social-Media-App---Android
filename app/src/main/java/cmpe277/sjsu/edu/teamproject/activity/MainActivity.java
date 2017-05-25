@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import cmpe277.sjsu.edu.teamproject.R;
 import cmpe277.sjsu.edu.teamproject.fragments.TabFragment;
+import cmpe277.sjsu.edu.teamproject.model.Session;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(null);
-
+        Toast.makeText(this, Session.LoggedEmail,Toast.LENGTH_LONG).show();
         init();
     }
 
@@ -49,6 +51,26 @@ public class MainActivity extends AppCompatActivity{
             fragmentTransaction.replace(R.id.content_frame, fragment);
             fragmentTransaction.commit();
         }
+        didSetSharedPreference();
+    }
+    public Boolean didSetSharedPreference() {
+
+        try{
+            SharedPreferences sharedPreferences = getSharedPreferences("logindata", Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("screenName","Aditya Parmar");
+            editor.putString("profileUri","https://s3-us-west-2.amazonaws.com/cmpe277/POST20170525_112442288506");
+
+            editor.apply();
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+
     }
 
 
@@ -59,6 +81,8 @@ public class MainActivity extends AppCompatActivity{
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
+        Toast.makeText(this, Session.LoggedEmail,Toast.LENGTH_LONG).show();
+
         Intent i = new Intent(this, SigninActivity.class);
         startActivity(i);
         finish();

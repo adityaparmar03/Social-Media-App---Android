@@ -1,7 +1,9 @@
 package cmpe277.sjsu.edu.teamproject.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -101,7 +103,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(), getString(R.string.post_success), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), getString(R.string.post_success), Toast.LENGTH_SHORT).show();
                 setData();
 
                 if (fragment != null) {
@@ -213,9 +215,17 @@ public class CreatePostFragment extends Fragment {
     }
 
     public void getData(){
-        TextView screenname = (TextView)getActivity().findViewById(R.id.screen_name_text_view);
-        screenname.setText("Aditya");
+        TextView txtscreenname = (TextView)getActivity().findViewById(R.id.screen_name_text_view);
         ImageView imageView = (ImageView) getActivity().findViewById(R.id.profile_pic_image_view);
+
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("logindata", Context.MODE_PRIVATE);
+        String screenName = sharedPreferences.getString("screenName","");
+
+        txtscreenname.setText(screenName);
+
+
+
         Glide.with(this)
                 .load("https://s3-us-west-2.amazonaws.com/cmpe277/POST20170525_112442288506")
                 .error(R.mipmap.ic_launcher)
@@ -264,6 +274,21 @@ public class CreatePostFragment extends Fragment {
         });
 
 
+    }
+    private void getSharedPreferencesPost() {
+
+        try {
+            TextView screenName = (TextView)getActivity().findViewById(R.id.screen_name_text_view);
+
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("logindata", Context.MODE_PRIVATE);
+            String email = sharedPreferences.getString("email","");
+
+
+
+        } catch (Exception e) {
+
+
+        }
     }
 
 
