@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import cmpe277.sjsu.edu.teamproject.R;
-import cmpe277.sjsu.edu.teamproject.activity.SigninActivity;
 
 public class NavigationFragment extends Fragment implements View.OnClickListener {
 
@@ -32,7 +31,7 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         return fragment;
     }
 
-    private TextView screenNameTextView, appSettingTextView, logoutTextView, sentRequestsTextView;
+    private TextView screenNameTextView, appSettingTextView, sentRequestsTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,13 +43,12 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
 
         screenNameTextView = (TextView) rootView.findViewById(R.id.screen_name_textview);
         appSettingTextView = (TextView) rootView.findViewById(R.id.settings_textview);
-        logoutTextView = (TextView) rootView.findViewById(R.id.logout_textview);
         sentRequestsTextView = (TextView) rootView.findViewById(R.id.sent_requests_textview);
 
 
         screenNameTextView.setOnClickListener(this);
         appSettingTextView.setOnClickListener(this);
-        logoutTextView.setOnClickListener(this);
+        sentRequestsTextView.setOnClickListener(this);
 
         return rootView;
     }
@@ -109,19 +107,6 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
                             .addToBackStack(getString(R.string.fragment_tag_sent_requests));
                     ft.commit();
                 }
-
-                break;
-
-            case R.id.logout_textview:
-
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("logindata",
-                        Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-                Intent i = new Intent(getActivity(), SigninActivity.class);
-                startActivity(i);
-                getActivity().finish();
 
                 break;
 

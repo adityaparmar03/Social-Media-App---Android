@@ -1,11 +1,15 @@
 package cmpe277.sjsu.edu.teamproject.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 
 import cmpe277.sjsu.edu.teamproject.R;
 import cmpe277.sjsu.edu.teamproject.fragments.TabFragment;
@@ -47,4 +51,16 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+
+    public void logout (View view){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("logindata",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+        Intent i = new Intent(this, SigninActivity.class);
+        startActivity(i);
+        finish();
+    }
 }
