@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import cmpe277.sjsu.edu.teamproject.fragments.FriendRequestFragment;
+import cmpe277.sjsu.edu.teamproject.fragments.FriendRequestsFragment;
 import cmpe277.sjsu.edu.teamproject.fragments.NavigationFragment;
 import cmpe277.sjsu.edu.teamproject.fragments.NotificationFragment;
 import cmpe277.sjsu.edu.teamproject.fragments.TimelineFragment;
@@ -24,23 +24,28 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                TimelineFragment timelineFragment = TimelineFragment.getInstance();
+//                TimelineFragment timelineFragment = TimelineFragment.getInstance();
+                TimelineFragment timelineFragment = new TimelineFragment();
                 return timelineFragment;
 
             case 1:
-                FriendRequestFragment friendRequestFragment = FriendRequestFragment.getInstance();
-                return friendRequestFragment;
+//                FriendRequestsFragment friendRequestsFragment = FriendRequestsFragment.getInstance();
+                FriendRequestsFragment friendRequestsFragment = new FriendRequestsFragment();
+                return friendRequestsFragment;
 
             case 2:
-                NotificationFragment notificationFragment = NotificationFragment.getInstance();
+//                NotificationFragment notificationFragment = NotificationFragment.getInstance();
+                NotificationFragment notificationFragment = new NotificationFragment();
                 return notificationFragment;
 
             case 3:
-                NavigationFragment navigationFragment = NavigationFragment.getInstance();
+//                NavigationFragment navigationFragment = NavigationFragment.getInstance();
+                NavigationFragment navigationFragment = new NavigationFragment();
                 return navigationFragment;
 
             default:
-                TimelineFragment defaultFragment = TimelineFragment.getInstance();
+//                TimelineFragment defaultFragment = TimelineFragment.getInstance();
+                TimelineFragment defaultFragment = new TimelineFragment();
                 return defaultFragment;
         }
     }

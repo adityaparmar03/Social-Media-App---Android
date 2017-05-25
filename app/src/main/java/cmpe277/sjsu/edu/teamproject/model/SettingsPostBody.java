@@ -1,15 +1,11 @@
 package cmpe277.sjsu.edu.teamproject.model;
 
-/**
- * Created by adityaparmar on 5/23/17.
- */
 
-public class SettingsPostRequest {
+public class SettingsPostBody {
 
     private String emailid;
     private Boolean visibility;
     private Boolean notification;
-
 
     public String getEmailid() {
         return emailid;

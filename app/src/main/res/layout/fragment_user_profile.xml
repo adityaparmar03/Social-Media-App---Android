@@ -15,14 +15,20 @@
 
         <include layout="@layout/layout_more_options" />
 
-        <include
-            android:id="@+id/layout_profile_friends"
-            layout="@layout/layout_profile_friends" />
+        <TextView
+            android:id="@+id/see_all_friends_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/see_all_friends" />
 
         <TextView
             android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:background="@android:color/white"
             android:text="@string/posts" />
 
         <android.support.v7.widget.RecyclerView

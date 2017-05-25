@@ -11,8 +11,7 @@
         android:layout_marginStart="10dp"
         android:text="@string/title"
         android:textColor="@android:color/white"
-        android:textSize="19sp"
-        android:textStyle="bold" />
+        android:textSize="19sp" />
 
     <Button
         android:id="@+id/done_btn"

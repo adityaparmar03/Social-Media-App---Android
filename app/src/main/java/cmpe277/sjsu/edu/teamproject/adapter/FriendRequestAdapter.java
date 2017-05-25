@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import cmpe277.sjsu.edu.teamproject.R;
 import cmpe277.sjsu.edu.teamproject.Services.FriendRequestService;
-import cmpe277.sjsu.edu.teamproject.model.CurrentUserSessionModel;
-import cmpe277.sjsu.edu.teamproject.model.FriendRequestDecisionRequest;
-import cmpe277.sjsu.edu.teamproject.model.FriendRequestModel;
-import okhttp3.ResponseBody;
+import cmpe277.sjsu.edu.teamproject.model.FriendRequest;
+import cmpe277.sjsu.edu.teamproject.model.FriendRequestConfirmReject;
+import cmpe277.sjsu.edu.teamproject.model.GenericPostResponse;
+import cmpe277.sjsu.edu.teamproject.model.Session;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,9 +27,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<FriendRequestModel> friendRequestList;
+    private List<FriendRequest> friendRequestList;
 
-    public FriendRequestAdapter(Context context, ArrayList<FriendRequestModel> friendRequestList) {
+    public FriendRequestAdapter(Context context, List<FriendRequest> friendRequestList) {
         this.context = context;
         this.friendRequestList = friendRequestList;
     }
@@ -43,21 +44,51 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final FriendRequestModel model = friendRequestList.get(position);
 
-        holder.screenNameTextView.setText(model.getName());
+        final FriendRequest model = friendRequestList.get(position);
+
+        holder.screenNameTextView.setText(model.getScreenName());
+
+        //holder.profileImageView
 
         holder.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Call confirm request API
 
-                friendRequestList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, friendRequestList.size());
+                FriendRequestConfirmReject friendRequestConfirm = new FriendRequestConfirmReject();
+                friendRequestConfirm.setRequestor(model.getEmail());
+                friendRequestConfirm.setSender(Session.LoggedEmail);
 
-                //call post method to post friend request decision -- postitive
-               // IsConfirmFriendRequest("YES",model.getNewfriendemailid());
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(context.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                FriendRequestService friendRequestService = retrofit.create(FriendRequestService.class);
+
+                Call<GenericPostResponse> callConfirmFriendRequest = friendRequestService.confirmPendingFriendRequest(friendRequestConfirm);
+                callConfirmFriendRequest.enqueue(new Callback<GenericPostResponse>() {
+                    @Override
+                    public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+
+                        if (response.body().getStatus().equals("200")) {
+
+                            friendRequestList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, friendRequestList.size());
+                        } else {
+
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<GenericPostResponse> call, Throwable t) {
+
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         });
@@ -65,73 +96,67 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Call delete request API
 
-                friendRequestList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, friendRequestList.size());
+                FriendRequestConfirmReject friendRequestReject = new FriendRequestConfirmReject();
+                friendRequestReject.setRequestor(model.getEmail());
+                friendRequestReject.setSender(Session.LoggedEmail);
 
-                //call post method to post friend request decision -- postitive
-               // IsConfirmFriendRequest("NO",model.getNewfriendemailid());
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(context.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                FriendRequestService friendRequestService = retrofit.create(FriendRequestService.class);
+
+                Call<GenericPostResponse> callRejectFriendRequest = friendRequestService.rejectPendingFrndRequest(friendRequestReject);
+                callRejectFriendRequest.enqueue(new Callback<GenericPostResponse>() {
+                    @Override
+                    public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+
+                        if (response.body().getStatus().equals("200")) {
+
+                            friendRequestList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, friendRequestList.size());
+                        } else {
+
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<GenericPostResponse> call, Throwable t) {
+
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
+
         });
+
     }
 
     @Override
     public int getItemCount() {
+
         return friendRequestList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView profileImageView;
         private TextView screenNameTextView;
         private Button confirmButton, deleteButton;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
 
             profileImageView = (ImageView) view.findViewById(R.id.profile_imageview);
-            screenNameTextView = (TextView) view.findViewById(R.id.fragment_friend_request_name_text);
-            confirmButton = (Button) view.findViewById(R.id.fragment_friend_request_confirm_text);
-            deleteButton = (Button) view.findViewById(R.id.fragment_friend_request_delete_text);
+            screenNameTextView = (TextView) view.findViewById(R.id.screen_name_textview);
+            confirmButton = (Button) view.findViewById(R.id.confirm_button);
+            deleteButton = (Button) view.findViewById(R.id.delete_button);
         }
-    }
-
-    public void IsConfirmFriendRequest(String decision,String newfriendemailid){
-
-
-        FriendRequestDecisionRequest friendRequestDecisionRequest = new FriendRequestDecisionRequest();
-        friendRequestDecisionRequest.setDecision(decision);
-        friendRequestDecisionRequest.setNewfriendemailid(newfriendemailid);
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://54.241.140.236:3009")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        FriendRequestService friendRequestService = retrofit.create(FriendRequestService.class);
-
-        Call<ResponseBody> friendrequestdecision = friendRequestService.friendrequestdecision(CurrentUserSessionModel.LoggedEmail,friendRequestDecisionRequest);
-        friendrequestdecision.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-
-                // Toast on activity
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                // Toast on activity
-
-            }
-        });
-
-
     }
 
 }

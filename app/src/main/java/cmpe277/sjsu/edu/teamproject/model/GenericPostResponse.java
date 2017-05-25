@@ -3,11 +3,8 @@ package cmpe277.sjsu.edu.teamproject.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by adityaparmar on 5/23/17.
- */
 
-public class StatusForAll {
+public class GenericPostResponse {
 
     @SerializedName("status")
     @Expose

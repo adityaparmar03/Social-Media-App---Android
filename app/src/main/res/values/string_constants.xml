@@ -6,5 +6,5 @@
     <string name="fragment_tag_create_post">fragment_create_post</string>
     <string name="fragment_tag_update_profile">fragment_update_profile</string>
 
-    <string name="ip">http://54.200.252.246:5500</string>
+    <string name="base_url">http://54.200.252.246:5500</string>
 </resources>

@@ -54,13 +54,13 @@ public class MainActivity extends AppCompatActivity{
     /* new function added*/
     public void logout(View view)
     {
-           SharedPreferences sharedPreferences = getSharedPreferences("logindata", Context.MODE_PRIVATE);
-           SharedPreferences.Editor editor = sharedPreferences.edit();
-           editor.clear();
-           editor.commit();
-           Intent i = new Intent(this,SigninActivity.class);
-           startActivity(i);
-           finish();
+        SharedPreferences sharedPreferences = getSharedPreferences("logindata", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+        Intent i = new Intent(this, SigninActivity.class);
+        startActivity(i);
+        finish();
 
 
     }

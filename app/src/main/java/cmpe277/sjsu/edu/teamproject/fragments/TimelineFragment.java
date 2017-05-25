@@ -17,18 +17,28 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cmpe277.sjsu.edu.teamproject.R;
+import cmpe277.sjsu.edu.teamproject.Services.TimelineFeedService;
 import cmpe277.sjsu.edu.teamproject.adapter.TimelineRecyclerViewAdapter;
-import cmpe277.sjsu.edu.teamproject.model.PostModel;
+import cmpe277.sjsu.edu.teamproject.model.Post;
+import cmpe277.sjsu.edu.teamproject.model.Session;
+import cmpe277.sjsu.edu.teamproject.model.Timeline;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TimelineFragment extends Fragment {
 
-    private static TimelineFragment fragment;
     private Context context;
-    private RecyclerView recyclerView;
+
     private TimelineRecyclerViewAdapter recyclerViewAdapter;
-    private View createPostLayout;
+    private List<Post> listOfPosts = new ArrayList<>();
+
+    private static TimelineFragment fragment;
 
     public static TimelineFragment getInstance() {
         if (fragment == null)
@@ -45,27 +55,14 @@ public class TimelineFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_timeline, container, false);
 
-        createPostLayout = root.findViewById(R.id.create_post_layout);
+        View createPostLayout = root.findViewById(R.id.create_post_layout);
 
-        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
 
-        ArrayList<PostModel> modelList = new ArrayList<>();
+        getTimelineFeed();
 
-        // TODO: fetch data and add to list
-        for (int i = 0; i < 10; i++) {
-            PostModel model = new PostModel();
-            model.setMessage("Sample FB post");
-            model.setScreenname("Screen Name");
-            model.setDatetime("5th may 2017");
-            model.setMedia(" ");
-            modelList.add(model);
-
-
-            modelList.add(model);
-        }
-
-        recyclerViewAdapter = new TimelineRecyclerViewAdapter(context, modelList);
+        recyclerViewAdapter = new TimelineRecyclerViewAdapter(context, listOfPosts);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         createPostLayout.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +92,35 @@ public class TimelineFragment extends Fragment {
 
         TextView textView = (TextView) view.findViewById(R.id.title);
         textView.setText(getString(R.string.timeline));
+    }
+
+    private void getTimelineFeed() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TimelineFeedService timelineFeedService = retrofit.create(TimelineFeedService.class);
+
+        Call<Timeline> callGetTimelineFeed = timelineFeedService.getFeed(Session.LoggedEmail);
+
+        callGetTimelineFeed.enqueue(new Callback<Timeline>() {
+
+            @Override
+            public void onResponse(Call<Timeline> call, Response<Timeline> response) {
+
+                listOfPosts = response.body().getPosts();
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<Timeline> call, Throwable t) {
+
+            }
+
+        });
+
     }
 
 }

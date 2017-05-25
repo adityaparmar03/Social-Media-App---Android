@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import cmpe277.sjsu.edu.teamproject.R;
-import cmpe277.sjsu.edu.teamproject.model.PostModel;
+import cmpe277.sjsu.edu.teamproject.model.Post;
 
 public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<TimelineRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<PostModel> timelineFeedList;
+    private List<Post> timelineFeedList;
 
 
-    public TimelineRecyclerViewAdapter(Context context, ArrayList<PostModel> feedList)
+    public TimelineRecyclerViewAdapter(Context context, List<Post> feedList)
     {
         this.context = context;
         timelineFeedList = feedList;
@@ -35,18 +35,18 @@ public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<TimelineRe
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final PostModel model = timelineFeedList.get(position);
+        final Post model = timelineFeedList.get(position);
 
-        holder.authorNameTextView.setText(model.getScreenname());
-        holder.postTimeStampTextView.setText(model.getDatetime());
-        holder.postTitleTextView.setText(model.getMessage());
+        holder.authorNameTextView.setText(model.getAuthorName());
+        holder.postTimeStampTextView.setText(model.getTimestamp());
+        holder.postTitleTextView.setText(model.getContent());
 
-        if (model.getMedia().equals(" ")) {
-
-            holder.postImageView.setVisibility(View.VISIBLE);
-        } else {
+        if (model.getMediaURL().equals("")) {
 
             holder.postImageView.setVisibility(View.GONE);
+        } else {
+
+            holder.postImageView.setVisibility(View.VISIBLE);
         }
 
     }

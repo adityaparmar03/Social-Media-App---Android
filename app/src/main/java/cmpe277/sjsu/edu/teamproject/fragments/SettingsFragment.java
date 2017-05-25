@@ -12,10 +12,10 @@ import android.widget.Toast;
 
 import cmpe277.sjsu.edu.teamproject.R;
 import cmpe277.sjsu.edu.teamproject.Services.SettingsService;
-import cmpe277.sjsu.edu.teamproject.model.CurrentUserSessionModel;
-import cmpe277.sjsu.edu.teamproject.model.SettingsGetResponse;
-import cmpe277.sjsu.edu.teamproject.model.SettingsPostRequest;
-import cmpe277.sjsu.edu.teamproject.model.StatusForAll;
+import cmpe277.sjsu.edu.teamproject.model.GenericPostResponse;
+import cmpe277.sjsu.edu.teamproject.model.Session;
+import cmpe277.sjsu.edu.teamproject.model.Settings;
+import cmpe277.sjsu.edu.teamproject.model.SettingsPostBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,11 +24,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SettingsFragment extends Fragment {
 
+    private Switch publicSwitch;
+    private Switch notificationsSwitch;
+    private Button applyButton;
+
     private static SettingsFragment fragment;
-    Switch aSwitchpublic;
-    Switch aSwitchnotification;
-    Boolean notificationState;
-    Boolean publicstate;
 
     public static SettingsFragment getInstance() {
         if (fragment == null) {
@@ -42,12 +42,11 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        publicSwitch = (Switch) view.findViewById(R.id.public_switch);
+        notificationsSwitch = (Switch) view.findViewById(R.id.notifications_switch);
+        applyButton = (Button) view.findViewById(R.id.apply_button);
+
         return view;
-
-
-
-
-
     }
 
 
@@ -55,100 +54,84 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button apply = (Button) getActivity().findViewById(R.id.btn_setting_apply);
+        fetchUserSettings();
 
-        getdata();
-
-
-        apply.setOnClickListener(new View.OnClickListener() {
+        applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                setdata();
-
+                updateUserSettings();
             }
         });
 
     }
 
-    public void getdata(){
-
-        aSwitchpublic = (Switch) getActivity().findViewById(R.id.switch_settings_public);
-        aSwitchnotification = (Switch)getActivity().findViewById(R.id.switch_settings_notification);
+    private void fetchUserSettings() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.ip))
+                .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        SettingsService settingsclient = retrofit.create(SettingsService.class);
-
-
-        Call<SettingsGetResponse> callsettings = settingsclient.getallSettings(CurrentUserSessionModel.LoggedEmail);
-        callsettings.enqueue(new Callback<SettingsGetResponse>() {
-            @Override
-            public void onResponse(Call<SettingsGetResponse> call, Response<SettingsGetResponse> response) {
-
-
-                if(response.body().getStatus().equals("200"))
-                {
-                    aSwitchnotification.setChecked(response.body().getNotification());
-                    aSwitchpublic.setChecked(response.body().getVisibility());
-
-                }
-                else
-                {
-                    Toast.makeText(getActivity(),"Something went wrong, please try again !",Toast.LENGTH_LONG).show();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<SettingsGetResponse> call, Throwable t) {
-
-            }
-        });
-
-
-    }
-
-    public void setdata(){
-
-        aSwitchpublic = (Switch) getActivity().findViewById(R.id.switch_settings_public);
-        aSwitchnotification = (Switch)getActivity().findViewById(R.id.switch_settings_notification);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.ip))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        SettingsPostRequest settingsPostRequest = new SettingsPostRequest();
-        settingsPostRequest.setEmailid(CurrentUserSessionModel.LoggedEmail);
-        settingsPostRequest.setVisibility(aSwitchpublic.isChecked());
-        settingsPostRequest.setNotification(aSwitchnotification.isChecked());
 
         SettingsService settingsService = retrofit.create(SettingsService.class);
-        Call<StatusForAll> callsettings = settingsService.postallSettings(settingsPostRequest);
 
-        callsettings.enqueue(new Callback<StatusForAll>() {
+        Call<Settings> callSettings = settingsService.getSettings(Session.LoggedEmail);
+
+        callSettings.enqueue(new Callback<Settings>() {
             @Override
-            public void onResponse(Call<StatusForAll> call, Response<StatusForAll> response) {
-                if(response.body().getStatus().equals("200"))
-                {
-                    Toast.makeText(getActivity(),"Your settings are saved successfully.",Toast.LENGTH_LONG).show();
+            public void onResponse(Call<Settings> call, Response<Settings> response) {
 
+                if (response.body().getStatus().equals("200")) {
+                    notificationsSwitch.setChecked(response.body().getNotification());
+                    publicSwitch.setChecked(response.body().getVisibility());
+
+                } else {
+
+                    Toast.makeText(getActivity(),"Something went wrong, please try again !",Toast.LENGTH_LONG).show();
                 }
-                else
-                {
+
+            }
+
+            @Override
+            public void onFailure(Call<Settings> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void updateUserSettings() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SettingsPostBody settingsPostBody = new SettingsPostBody();
+        settingsPostBody.setEmailid(Session.LoggedEmail);
+        settingsPostBody.setVisibility(publicSwitch.isChecked());
+        settingsPostBody.setNotification(notificationsSwitch.isChecked());
+
+        SettingsService settingsService = retrofit.create(SettingsService.class);
+        Call<GenericPostResponse> callSettings = settingsService.updateSettings(settingsPostBody);
+
+        callSettings.enqueue(new Callback<GenericPostResponse>() {
+            @Override
+            public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+
+                if (response.body().getStatus().equals("200")) {
+
+                    Toast.makeText(getActivity(), "Your settings are saved successfully.", Toast.LENGTH_LONG).show();
+                } else {
+
                     Toast.makeText(getActivity(),"Something went wrong, please try again !",Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<StatusForAll> call, Throwable t) {
-
+            public void onFailure(Call<GenericPostResponse> call, Throwable t) {
             }
+
         });
 
     }

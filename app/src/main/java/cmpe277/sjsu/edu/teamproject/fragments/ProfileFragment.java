@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import cmpe277.sjsu.edu.teamproject.R;
 import cmpe277.sjsu.edu.teamproject.adapter.TimelineRecyclerViewAdapter;
-import cmpe277.sjsu.edu.teamproject.model.PostModel;
+import cmpe277.sjsu.edu.teamproject.model.Post;
 import cmpe277.sjsu.edu.teamproject.model.ProfileModel;
 
 
@@ -66,18 +66,18 @@ public class ProfileFragment extends Fragment {
 
 
 
-        ArrayList<PostModel> modelList = new ArrayList<>();
+        ArrayList<Post> modelList = new ArrayList<>();
 
         // dummy data
-        for(int i=0;i<10;i++)
-        {
-            PostModel model = new PostModel();
-            model.setMessage("Sample FB post");
-            model.setScreenname("Screen Name");
-            model.setDatetime("5th may 2017");
-            model.setMedia(" ");
-            modelList.add(model);
-        }
+//        for(int i=0;i<10;i++)
+//        {
+//            Post model = new Post();
+//            model.setMessage("Sample FB post");
+//            model.setScreenname("Screen Name");
+//            model.setDatetime("5th may 2017");
+//            model.setMedia(" ");
+//            modelList.add(model);
+//        }
 
         TimelineRecyclerViewAdapter adapter = new TimelineRecyclerViewAdapter(context, modelList);
         recyclerView.setAdapter(adapter);
@@ -118,19 +118,13 @@ public class ProfileFragment extends Fragment {
         updateInfoImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.update_info));
 
         // view all friends
-        View friendsView = view.findViewById(R.id.layout_profile_friends);
-        TextView seeAllFriendsText = (TextView) friendsView.findViewById(R.id.see_all_friends_textview);
+        TextView seeAllFriendsText = (TextView) profileHeaderView.findViewById(R.id.see_all_friends_textview);
         seeAllFriendsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), getString(R.string.see_all_friends), Toast.LENGTH_SHORT).show();
             }
         });
-
-        // friends count
-        TextView friendsCount = (TextView)friendsView.findViewById(R.id.profile_friends_count);
-        // dummy data
-        friendsCount.setText("150");
 
         // user posts
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
