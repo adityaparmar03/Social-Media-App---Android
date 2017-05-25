@@ -14,8 +14,9 @@
     <string name="timeline">Timeline</string>
     <string name="post_heading">What\'s on your mind?</string>
     <string name="status">Status</string>
-    <string name="choosephoto">Choose Photo</string>
-    <string name="photos">Upload Photo</string>
+    <string name="photos">Photos</string>
+    <string name="gallary">Upload Image</string>
+    <string name="camera">Camera</string>
     <string name="life_event">Life Event</string>
 
     <!--NAVIGATION FRAGMENT -->

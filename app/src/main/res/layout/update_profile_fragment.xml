@@ -16,28 +16,6 @@
         android:padding="12dp">
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/tx_update_profile_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/pemail"
-                    android:inputType="text" />
-            </android.support.design.widget.TextInputLayout>
-
-        </LinearLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -153,7 +131,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textColor="@color/colorPrimaryDark"
-            android:text="@string/photos" />
+            android:text="@string/gallary" />
         </LinearLayout>
 
 

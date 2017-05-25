@@ -15,7 +15,7 @@
             android:id="@+id/profile_pic_image_view"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@mipmap/ic_launcher" />
+            android:padding="0.1dp"/>
 
         <TextView
             android:id="@+id/screen_name_text_view"
@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
-            android:text="Screen Name" />
+            android:text="Screen Name"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -46,7 +47,7 @@
         <ImageView
             android:id="@+id/post_image_imageview"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:layout_margin="10dp"
             />
 
@@ -54,19 +55,24 @@
 
     <include layout="@layout/view_seperator" />
 
-    <TextView
-        android:id="@+id/choose_photos_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/choosephoto" />
-    <TextView
-        android:id="@+id/photos_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/photos" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/gallery_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/gallary"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
 
     <include layout="@layout/view_seperator" />
 

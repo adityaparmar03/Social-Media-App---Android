@@ -2,13 +2,15 @@ package cmpe277.sjsu.edu.teamproject.fragments;
 
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,10 +28,15 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
+import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import cmpe277.sjsu.edu.teamproject.R;
 
@@ -39,9 +46,13 @@ import static android.app.Activity.RESULT_OK;
 public class CreatePostFragment extends Fragment {
 
     private static CreatePostFragment fragment;
-    private static int resultcode = 1;
-    String imgDecodableString;
-    ImageView imageView;
+
+
+    private static Uri selectedImage;
+    private static String imgPath="";
+    static int requestGallery = 100;
+
+    ImageView mImageView;
 
     public static CreatePostFragment newInstance() {
         if(fragment == null)
@@ -54,46 +65,14 @@ public class CreatePostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_post, container, false);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         setHasOptionsMenu(true);
 
         return view;
 
-
-
-
-
     }
-    @Override
-    public void onActivityResult(int requestCode,int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            // When an Image is picked
-            if (requestCode == resultcode && resultCode == RESULT_OK && null != data) {
-                // Get the Image from data
-
-                Uri selectedImage = data.getData();
-               // Toast.makeText(getActivity(),selectedImage.toString(),Toast.LENGTH_LONG).show();
-                File file = new File(selectedImage.getPath());
-                Toast.makeText(getActivity(),file.toString(),Toast.LENGTH_LONG).show();
-
-                imageView = (ImageView) getActivity().findViewById(R.id.post_image_imageview);
-                imageView.setImageURI(selectedImage);
-                new File(selectedImage.getPath());
-                uploadonS3(file);
-
-
-            } else {
-                Toast.makeText(getActivity(), "You haven't picked Image",
-                        Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG)
-                    .show();
-        }
-    }
-
-
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -105,12 +84,14 @@ public class CreatePostFragment extends Fragment {
         button.setVisibility(View.VISIBLE);
         button.setClickable(true);
         button.setText(getString(R.string.post));
+        getData();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Toast.makeText(getActivity(), getString(R.string.post_success), Toast.LENGTH_SHORT).show();
+                setData();
 
                 if (fragment != null) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -135,58 +116,112 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
-        TextView choosephoto = (TextView) getActivity().findViewById(R.id.choose_photos_textview);
-        choosephoto.setOnClickListener(new View.OnClickListener() {
+        TextView txtgalary = (TextView) getActivity().findViewById(R.id.gallery_textview);
+        txtgalary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, resultcode);
+                Intent gallery=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                gallery.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                if(gallery.resolveActivity(getActivity().getPackageManager())!=null) {
+                    startActivityForResult(gallery,requestGallery);
+
+                }
             }
+
         });
 
-        TextView uploadphoto = (TextView) getActivity().findViewById(R.id.photos_textview);
-        uploadphoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
 
     }
 
-    public Boolean uploadonS3(File file)
+    public String uploadOnS3(File file)
     {
-        AmazonS3Client s3Client =   new AmazonS3Client( new BasicAWSCredentials( "AKIAIAP2EKQ5UPNOAANA","uAYDPPB5n4M0QQ6hFeMno0EYbLs2M2L00YUTS1qZ" ) );
+        Random rand = new Random();
+        int  randomNo = rand.nextInt(999999) + 1;
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String s3Imagename = "POST" + timeStamp +randomNo;
 
-        PutObjectRequest por =    new PutObjectRequest( "cmpe277", "imagename",  file  );
-
-        por.setCannedAcl(CannedAccessControlList.PublicRead);
-
-        s3Client.putObject( por );
-
+        AmazonS3Client amazonS3Client =   new AmazonS3Client( new BasicAWSCredentials( "AKIAIAP2EKQ5UPNOAANA","uAYDPPB5n4M0QQ6hFeMno0EYbLs2M2L00YUTS1qZ" ) );
+        PutObjectRequest putObjectRequest =    new PutObjectRequest( "cmpe277", s3Imagename ,  file  );
+        putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
+        amazonS3Client.putObject( putObjectRequest );
         ResponseHeaderOverrides responseHeaderOverrides = new ResponseHeaderOverrides();
         responseHeaderOverrides.setContentType( "image/jpeg" );
-
-        GeneratePresignedUrlRequest urlRequest =    new GeneratePresignedUrlRequest( "cmpe277","imagename");
-        // Added an hour's worth of milliseconds to the current time.
+        GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest( "cmpe277",s3Imagename);
         urlRequest.setExpiration(new Date( System.currentTimeMillis() + 3600000 ) );
         urlRequest.setResponseHeaders(responseHeaderOverrides);
 
 
-        URL url = s3Client.generatePresignedUrl( urlRequest );
+        URL url = amazonS3Client.generatePresignedUrl( urlRequest );
+        String s3ImageURL = getString(R.string.s3)+url.getPath();
+
+        //Toast.makeText(getActivity(),s3ImageURL,Toast.LENGTH_LONG).show();
+        return s3ImageURL;
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==requestGallery && resultCode == RESULT_OK && data!=null) {
+
+            selectedImage = data.getData();
+
+            imgPath=getRealPathFromURI(selectedImage);
+            File file = new File(imgPath);
 
 
+            if(!uploadOnS3(file).equals(" ")){
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), selectedImage);
+                    mImageView = (ImageView)getActivity().findViewById(R.id.post_image_imageview);
+                    mImageView.setImageBitmap(bitmap);
+                    mImageView.setMaxHeight(bitmap.getHeight());
+                    mImageView.setMaxWidth(bitmap.getWidth());
 
-        String imagepaths3 = "https://s3-us-west-1.amazonaws.com/cmpefb"+url.getPath();
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                Toast.makeText(getActivity(),getString(R.string.somethingwentwrong),Toast.LENGTH_LONG).show();
+            }
 
-        Log.d("path:",imagepaths3);
-        return true;
+
+        }
+
+    }
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(index);
 
     }
 
+    public void getData(){
+        TextView screenname = (TextView)getActivity().findViewById(R.id.screen_name_text_view);
+        screenname.setText("Aditya");
+        ImageView imageView = (ImageView) getActivity().findViewById(R.id.profile_pic_image_view);
+        Glide.with(this)
+                .load("https://s3-us-west-2.amazonaws.com/cmpe277/POST20170525_112442288506")
+                .error(R.mipmap.ic_launcher)
+                .into(imageView);
 
+
+    }
+    public void setData(){
+        TextView screenname = (TextView)getActivity().findViewById(R.id.screen_name_text_view);
+        ImageView imageView = (ImageView) getActivity().findViewById(R.id.profile_pic_image_view);
+        TextView message = (TextView)getActivity().findViewById(R.id.create_post_textview);
+
+
+    }
 
 
 }
