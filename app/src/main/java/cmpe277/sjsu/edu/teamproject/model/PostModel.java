@@ -1,124 +1,50 @@
 package cmpe277.sjsu.edu.teamproject.model;
 
-import java.util.ArrayList;
-
 public class PostModel {
 
-    private int mAuthorId;
-    private String mAuthorName;
-    private String mTitle;
-    private boolean mIsMediaAttached;
-    private String mAttachedPhoto;
-    private int mLikeCount;
-    private int mCommentCount;
-    private int mShareCount;
-    private boolean mYouLikedIt;
-    private String mSharedTimeStamp;
-    private String mLocationShared;
-    private ArrayList<FriendModel> mTaggedFriendList;
-    private String mPrivacy;
+    private String screenname;
+    private String profilepic;
+    private String datetime;
+    private String media;
+    private String message;
 
-    public int getAuthorId() {
-        return mAuthorId;
+    public String getScreenname() {
+        return screenname;
     }
 
-    public void setAuthorId(int authorId) {
-        this.mAuthorId = authorId;
+    public void setScreenname(String screenname) {
+        this.screenname = screenname;
     }
 
-    public String getAuthorName() {
-        return mAuthorName;
+    public String getProfilepic() {
+        return profilepic;
     }
 
-    public void setAuthorName(String authorName) {
-        this.mAuthorName = authorName;
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
     }
 
-    public String getTitle() {
-        return mTitle;
+    public String getDatetime() {
+        return datetime;
     }
 
-    public void setTitle(String title) {
-        this.mTitle = title;
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
-    public boolean isMediaAttached() {
-        return mIsMediaAttached;
+    public String getMedia() {
+        return media;
     }
 
-    public void setIsMediaAttached(boolean isMediaAttached) {
-        this.mIsMediaAttached = isMediaAttached;
+    public void setMedia(String media) {
+        this.media = media;
     }
 
-    public String getAttachedPhoto() {
-        return mAttachedPhoto;
+    public String getMessage() {
+        return message;
     }
 
-    public void setAttachedPhoto(String attachedPhoto) {
-        this.mAttachedPhoto = attachedPhoto;
-    }
-
-    public int getLikeCount() {
-        return mLikeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.mLikeCount = likeCount;
-    }
-
-    public int getCommentCount() {
-        return mCommentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.mCommentCount = commentCount;
-    }
-
-    public int getShareCount() {
-        return mShareCount;
-    }
-
-    public void setShareCount(int shareCount) {
-        this.mShareCount = shareCount;
-    }
-
-    public boolean isYouLikedIt() {
-        return mYouLikedIt;
-    }
-
-    public void setYouLikedIt(boolean youLikedIt) {
-        this.mYouLikedIt = youLikedIt;
-    }
-
-    public String getSharedTimeStamp() {
-        return mSharedTimeStamp;
-    }
-
-    public void setSharedTimeStamp(String sharedTimeStamp) {
-        this.mSharedTimeStamp = sharedTimeStamp;
-    }
-
-    public String getLocationShared() {
-        return mLocationShared;
-    }
-
-    public void setLocationShared(String locationShared) {
-        this.mLocationShared = locationShared;
-    }
-
-    public ArrayList<FriendModel> getTaggedFriendList() {
-        return mTaggedFriendList;
-    }
-
-    public void setTaggedFriendList(ArrayList<FriendModel> taggedFriendList) {
-        this.mTaggedFriendList = taggedFriendList;
-    }
-
-    public String getPrivacy() {
-        return mPrivacy;
-    }
-
-    public void setPrivacy(String privacy) {
-        this.mPrivacy = privacy;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

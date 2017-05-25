@@ -61,8 +61,10 @@ public class ProfileFragment extends Fragment {
 
         init(view);
 
-        professionTextView.setText(getString(R.string.profession, mProfileModel.getWorksAt()));
-        locationTextView.setText(getString(R.string.location, mProfileModel.getLivesIn()));
+        professionTextView.setText(getString(R.string.profession, mProfileModel.getProfession()));
+        locationTextView.setText(getString(R.string.location, mProfileModel.getLocation()));
+
+
 
         ArrayList<PostModel> modelList = new ArrayList<>();
 
@@ -70,10 +72,10 @@ public class ProfileFragment extends Fragment {
         for(int i=0;i<10;i++)
         {
             PostModel model = new PostModel();
-            model.setTitle("Sample FB post");
-            model.setAuthorName("Screen Name");
-            model.setSharedTimeStamp("5th may 2017");
-            model.setIsMediaAttached(false);
+            model.setMessage("Sample FB post");
+            model.setScreenname("Screen Name");
+            model.setDatetime("5th may 2017");
+            model.setMedia(" ");
             modelList.add(model);
         }
 

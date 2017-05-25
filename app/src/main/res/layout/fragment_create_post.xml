@@ -48,18 +48,25 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="10dp"
-            android:visibility="gone" />
+            />
 
     </LinearLayout>
 
     <include layout="@layout/view_seperator" />
 
     <TextView
+        android:id="@+id/choose_photos_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/choosephoto" />
+    <TextView
         android:id="@+id/photos_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@string/photos" />
+
 
     <include layout="@layout/view_seperator" />
 

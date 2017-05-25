@@ -19,7 +19,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/notification_textview"
+                android:id="@+id/textview_settings_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/noticfications"
@@ -31,7 +31,7 @@
                 android:layout_weight="1" />
 
             <Switch
-                android:id="@+id/friends_only_textview"
+                android:id="@+id/switch_settings_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -44,10 +44,10 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textview_setting_freinds_only"
+                android:id="@+id/textview_settings_public"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/friends_only"
+                android:text="@string/settingpublic"
                 android:textSize="18sp" />
 
             <View
@@ -56,7 +56,7 @@
                 android:layout_weight="1" />
 
             <Switch
-                android:id="@+id/switch_friends_only"
+                android:id="@+id/switch_settings_public"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -65,7 +65,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_setting_apply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

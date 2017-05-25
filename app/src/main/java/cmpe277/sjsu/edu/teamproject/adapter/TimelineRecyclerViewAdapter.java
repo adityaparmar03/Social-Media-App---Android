@@ -37,11 +37,11 @@ public class TimelineRecyclerViewAdapter extends RecyclerView.Adapter<TimelineRe
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final PostModel model = timelineFeedList.get(position);
 
-        holder.authorNameTextView.setText(model.getAuthorName());
-        holder.postTimeStampTextView.setText(model.getSharedTimeStamp());
-        holder.postTitleTextView.setText(model.getTitle());
+        holder.authorNameTextView.setText(model.getScreenname());
+        holder.postTimeStampTextView.setText(model.getDatetime());
+        holder.postTitleTextView.setText(model.getMessage());
 
-        if (model.isMediaAttached()) {
+        if (model.getMedia().equals(" ")) {
 
             holder.postImageView.setVisibility(View.VISIBLE);
         } else {

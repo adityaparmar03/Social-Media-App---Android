@@ -6,7 +6,16 @@ public class FriendRequestModel {
     private String mId;
     private String mName;
     private String mProfilePic;
-    private int mMutualCount;
+    private String newfriendemailid;
+
+    public String getNewfriendemailid() {
+        return newfriendemailid;
+    }
+
+    public void setNewfriendemailid(String newfriendemailid) {
+        this.newfriendemailid = newfriendemailid;
+    }
+    //private int mMutualCount;
 
     public String getName() {
         return mName;
@@ -24,13 +33,7 @@ public class FriendRequestModel {
         this.mProfilePic = profilePic;
     }
 
-    public int getMutualCount() {
-        return mMutualCount;
-    }
 
-    public void setmMutualCount(int mutualCount) {
-        this.mMutualCount = mutualCount;
-    }
 
     public String getId() {
         return mId;

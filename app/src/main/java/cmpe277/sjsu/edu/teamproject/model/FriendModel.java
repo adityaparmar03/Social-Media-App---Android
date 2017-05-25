@@ -7,6 +7,7 @@ public class FriendModel {
     private String mImageUrl;
     private int mMutualCount;
 
+
     public String getName() {
         return mName;
     }

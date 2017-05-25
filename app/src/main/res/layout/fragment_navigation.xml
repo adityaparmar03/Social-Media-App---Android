@@ -116,7 +116,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/ic_launcher"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/tx_logout"
@@ -127,7 +127,8 @@
             android:padding="10dp"
             android:layout_gravity="center"
             android:gravity="center_vertical"
-            android:drawablePadding="5dp"/>
+            android:drawablePadding="5dp"
+            android:onClick="logout"/>
     </LinearLayout>
 
 

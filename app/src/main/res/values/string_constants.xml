@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--FRAGMENT TAGS-->
+    <string name="fragment_tag_profile">fragment_profile</string>
+    <string name="fragment_tag_settings">fragment_settings</string>
+    <string name="fragment_tag_create_post">fragment_create_post</string>
+    <string name="fragment_tag_update_profile">fragment_update_profile</string>
+
+    <string name="ip">http://54.200.252.246:5500</string>
+</resources>

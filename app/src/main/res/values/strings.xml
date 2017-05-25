@@ -8,12 +8,14 @@
     <string name="register_text">Create a new account</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="verification_code">Verification Code</string>
 
     <!--TIMELINE FRAGMENT -->
     <string name="timeline">Timeline</string>
     <string name="post_heading">What\'s on your mind?</string>
     <string name="status">Status</string>
-    <string name="photos">Photos</string>
+    <string name="choosephoto">Choose Photo</string>
+    <string name="photos">Upload Photo</string>
     <string name="life_event">Life Event</string>
 
     <!--NAVIGATION FRAGMENT -->
@@ -32,7 +34,8 @@
 
     <!--SETTINGS FRAGMENT -->
     <string name="apply">Apply</string>
-    <string name="friends_only">Friends Only</string>
+
+    <string name="settingpublic">Public</string>
 
     <!--CREATE POST FRAGMENT-->
     <string name="post">Post</string>
@@ -56,11 +59,25 @@
     <string name="done">Done</string>
     <string name="title">Title</string>
 
-    <!--FRAGMENT TAGS-->
-    <string name="fragment_tag_profile">fragment_profile</string>
-    <string name="fragment_tag_settings">fragment_settings</string>
-    <string name="fragment_tag_create_post">fragment_create_post</string>
-    <string name="fragment_tag_update_profile">fragment_update_profile</string>
+
+    <!--Upadate Profile-->
+    <string name="pemail">Email</string>
+    <string name="pscreebname">Screen Name</string>
+    <string name="pprofession">Profession</string>
+    <string name="plocation">Location</string>
+    <string name="pabout_me">About me</string>
+    <string name="pinterests">Interests</string>
+    <string name="update">Update</string>
+
+    <!-- Serach Fiends -->
+    <string name="search">Search</string>
+    <string name="searchemailscreenname">Email/Screen-Name</string>
+
+    <!-- Verify Code -->
+    <string name="verify">Verify</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

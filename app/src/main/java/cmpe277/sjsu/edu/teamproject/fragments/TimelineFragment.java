@@ -55,11 +55,12 @@ public class TimelineFragment extends Fragment {
         // TODO: fetch data and add to list
         for (int i = 0; i < 10; i++) {
             PostModel model = new PostModel();
-            model.setTitle("" +
-                    "Dummy Post.");
-            model.setAuthorName("Author Name");
-            model.setSharedTimeStamp("5th may 2017");
-            model.setIsMediaAttached(false);
+            model.setMessage("Sample FB post");
+            model.setScreenname("Screen Name");
+            model.setDatetime("5th may 2017");
+            model.setMedia(" ");
+            modelList.add(model);
+
 
             modelList.add(model);
         }

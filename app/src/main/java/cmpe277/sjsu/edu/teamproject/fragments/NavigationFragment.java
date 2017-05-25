@@ -1,5 +1,8 @@
 package cmpe277.sjsu.edu.teamproject.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import cmpe277.sjsu.edu.teamproject.R;
+import cmpe277.sjsu.edu.teamproject.activity.MainActivity;
+import cmpe277.sjsu.edu.teamproject.model.CurrentUserSessionModel;
 import cmpe277.sjsu.edu.teamproject.model.ProfileModel;
 
 public class NavigationFragment extends Fragment implements View.OnClickListener {
@@ -69,9 +74,16 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.screen_name_textview:
                 ProfileModel model = new ProfileModel();
-                model.setWorksAt("Nvidia");
-                model.setName("Anup Rathi");
-                model.setLivesIn("Santa Clara,California");
+                model.setEmailid(CurrentUserSessionModel.LoggedEmail);
+                model.setScreenname("KING");
+                model.setProfilepic("");
+                model.setLocation("San Jose");
+                model.setAboutme("I m cool");
+                model.setInterests(new String[]{"Movie","sports"});
+
+
+
+
 
                 Fragment profileFragment = ProfileFragment.getInstance(new ProfileModel());
 
@@ -97,8 +109,14 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
                 }
                 break;
 
+
+
+
+
         }
 
+
     }
+
 }
 

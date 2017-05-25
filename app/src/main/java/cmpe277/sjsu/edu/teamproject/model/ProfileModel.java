@@ -1,96 +1,70 @@
 package cmpe277.sjsu.edu.teamproject.model;
 
-import java.util.ArrayList;
-
-
 public class ProfileModel {
 
-    private String mName;
-    private String mProfilePic, mCoverPic;
-    private int mFriendsCount;
-    private ArrayList<FriendModel> mFriendsList;
-    private String mWorksAt, mLivesIn;
-    private ArrayList<PostModel> mPostFeed;
-    private boolean mIsSelf;
-    private boolean mIsFriend;
+   private String screenname;
+   private String emailid;
+   private String profilepic;
+   private String location;
+   private String profession;
+    private String aboutme;
+    private String[] interests;
 
-    public String getName() {
-        return mName;
+    public String getProfession() {
+        return profession;
     }
 
-    public void setName(String name) {
-        this.mName = name;
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
 
-    public String getProfilePic() {
-        return mProfilePic;
+
+
+    public String getScreenname() {
+        return screenname;
     }
 
-    public void setProfilePic(String profilePic) {
-        this.mProfilePic = profilePic;
+    public void setScreenname(String screenname) {
+        this.screenname = screenname;
     }
 
-    public String getCoverPic() {
-        return mCoverPic;
+    public String getEmailid() {
+        return emailid;
     }
 
-    public void setCoverPic(String coverPic) {
-        this.mCoverPic = coverPic;
+    public void setEmailid(String emailid) {
+        this.emailid = emailid;
     }
 
-    public int getFriendsCount() {
-        return mFriendsCount;
+    public String getProfilepic() {
+        return profilepic;
     }
 
-    public void setFriendsCount(int friendsCount) {
-        this.mFriendsCount = friendsCount;
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
     }
 
-    public ArrayList<FriendModel> getFriendsList() {
-        return mFriendsList;
+    public String getLocation() {
+        return location;
     }
 
-    public void setFriendsList(ArrayList<FriendModel> friendsList) {
-        this.mFriendsList = friendsList;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getWorksAt() {
-        return mWorksAt;
+    public String getAboutme() {
+        return aboutme;
     }
 
-    public void setWorksAt(String worksAt) {
-        this.mWorksAt = worksAt;
+    public void setAboutme(String aboutme) {
+        this.aboutme = aboutme;
     }
 
-    public String getLivesIn() {
-        return mLivesIn;
+    public String[] getInterests() {
+        return interests;
     }
 
-    public void setLivesIn(String livesIn) {
-        this.mLivesIn = livesIn;
-    }
-
-    public ArrayList<PostModel> getPostFeed() {
-        return mPostFeed;
-    }
-
-    public void setPostFeed(ArrayList<PostModel> postFeed) {
-        this.mPostFeed = postFeed;
-    }
-
-    public boolean isSelf() {
-        return mIsSelf;
-    }
-
-    public void setIsSelf(boolean isSelf) {
-        this.mIsSelf = isSelf;
-    }
-
-    public boolean isFriend() {
-        return mIsFriend;
-    }
-
-    public void setIsFriend(boolean isFriend) {
-        this.mIsFriend = isFriend;
+    public void setInterests(String[] interests) {
+        this.interests = interests;
     }
 }
