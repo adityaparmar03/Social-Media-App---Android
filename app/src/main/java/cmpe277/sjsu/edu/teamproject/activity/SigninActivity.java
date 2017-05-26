@@ -236,7 +236,7 @@ public class SigninActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("email",email);
             editor.putString("password",password);
-
+            Session.LoggedEmail=email;
             editor.apply();
 
             return true;

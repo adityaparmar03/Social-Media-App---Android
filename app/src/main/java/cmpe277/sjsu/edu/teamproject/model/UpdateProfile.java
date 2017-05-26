@@ -6,12 +6,23 @@ package cmpe277.sjsu.edu.teamproject.model;
 
 public class UpdateProfile {
 
+    private String emailid;
     private String screenName;
     private String location;
     private String profession;
     private String aboutme;
     private String interest;
     private String profilepicUrl;
+
+    public String getEmailid() {
+        return emailid;
+    }
+
+    public void setEmailid(String emailid) {
+        this.emailid = emailid;
+    }
+
+
 
     public String getScreenName() {
         return screenName;
