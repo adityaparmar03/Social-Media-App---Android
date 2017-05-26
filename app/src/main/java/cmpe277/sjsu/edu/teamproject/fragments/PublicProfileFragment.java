@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -24,8 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cmpe277.sjsu.edu.teamproject.R;
+import cmpe277.sjsu.edu.teamproject.Services.FriendRequestService;
 import cmpe277.sjsu.edu.teamproject.Services.ProfileService;
 import cmpe277.sjsu.edu.teamproject.adapter.TimelineRecyclerViewAdapter;
+import cmpe277.sjsu.edu.teamproject.model.AddFriend;
+import cmpe277.sjsu.edu.teamproject.model.FollowFriend;
+import cmpe277.sjsu.edu.teamproject.model.GenericPostResponse;
 import cmpe277.sjsu.edu.teamproject.model.Post;
 import cmpe277.sjsu.edu.teamproject.model.Session;
 import cmpe277.sjsu.edu.teamproject.model.UserProfile;
@@ -82,30 +87,95 @@ public class PublicProfileFragment extends Fragment {
         viewFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // follow
+
+                FollowFriend followFriend = new FollowFriend();
+                followFriend.setToBeFollowed(userProfile.getEmailId());
+                followFriend.setRequestor(Session.LoggedEmail);
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(context.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                FriendRequestService friendRequestService = retrofit.create(FriendRequestService.class);
+
+                Call<GenericPostResponse> callConfirmFriendRequest = friendRequestService.followUser(followFriend);
+                callConfirmFriendRequest.enqueue(new Callback<GenericPostResponse>() {
+                    @Override
+                    public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+
+                        if (response.body().getStatus().equals("200")) {
+
+                            Toast.makeText(context, "Request Sent", Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<GenericPostResponse> call, Throwable t) {
+
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
 
         TextView followTextView = (TextView) viewFollow.findViewById(R.id.option_one_textview);
-        followTextView.setText(getString(R.string.update_info));
+        followTextView.setText("Follow");
 
         ImageView followImageView = (ImageView) viewFollow.findViewById(R.id.option_one_imageview);
-        followImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.update_info));
+        followImageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_launcher));
 
         // send friend request
         View viewSendFriendReq = view.findViewById(R.id.option_two_layout);
         viewSendFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // send friend request
+
+                AddFriend addFriend = new AddFriend();
+                addFriend.setToBeFriend(userProfile.getEmailId());
+                addFriend.setRequestor(Session.LoggedEmail);
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(context.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                FriendRequestService friendRequestService = retrofit.create(FriendRequestService.class);
+
+                Call<GenericPostResponse> callConfirmFriendRequest = friendRequestService.addFrndForExistingUser(addFriend);
+                callConfirmFriendRequest.enqueue(new Callback<GenericPostResponse>() {
+                    @Override
+                    public void onResponse(Call<GenericPostResponse> call, Response<GenericPostResponse> response) {
+
+                        if (response.body().getStatus().equals("200")) {
+
+                            Toast.makeText(context, "Request Sent", Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<GenericPostResponse> call, Throwable t) {
+
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
         TextView SendFriendReqTextView = (TextView) viewSendFriendReq.findViewById(R.id.option_two_textview);
-        SendFriendReqTextView.setText(getString(R.string.update_info));
+        SendFriendReqTextView.setText("Add Friend");
 
         ImageView SendFriendReqImageView = (ImageView) viewSendFriendReq.findViewById(R.id.option_two_imageview);
-        SendFriendReqImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.update_info));
+        SendFriendReqImageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_launcher));
 
         // view all friends
         TextView seeAllFriendsText = (TextView) view.findViewById(R.id.see_all_friends_textview);

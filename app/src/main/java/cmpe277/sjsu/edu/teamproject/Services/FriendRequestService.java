@@ -35,8 +35,7 @@ public interface FriendRequestService {
     Call<List<FriendRequest>> fetchFriendsDtls(@Path("emailid") String emailId);
 
     @POST("/addFrndForExistingUser")
-    Call<GenericPostResponse> addFrndForExistingUser
-            (@Body AddFriend addFriend);
+    Call<GenericPostResponse> addFrndForExistingUser(@Body AddFriend addFriend);
 
     @POST("/followUser")
     Call<GenericPostResponse> followUser(@Body FollowFriend followFriend);
