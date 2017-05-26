@@ -88,6 +88,9 @@ public class ProfileFragment extends Fragment {
         interestsTextView = (TextView) profileHeaderView.findViewById(R.id.interests_textview);
         screenNameTextView = (TextView) profileHeaderView.findViewById(R.id.screen_name_textview);
 
+        View optionOneLayout = view.findViewById(R.id.option_one_layout);
+        optionOneLayout.setVisibility(View.INVISIBLE);
+
         // update info
         View viewUpdateInfo = view.findViewById(R.id.option_two_layout);
         viewUpdateInfo.setOnClickListener(new View.OnClickListener() {

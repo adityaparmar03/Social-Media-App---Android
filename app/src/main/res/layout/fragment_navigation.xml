@@ -78,7 +78,7 @@
             android:id="@+id/sent_requests_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sent Requests"
+            android:text="Browse Profiles"
             android:textSize="18dp"
             android:padding="10dp"
             android:layout_gravity="center"

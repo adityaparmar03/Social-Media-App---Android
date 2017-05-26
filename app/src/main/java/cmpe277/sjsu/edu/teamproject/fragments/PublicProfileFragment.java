@@ -43,6 +43,7 @@ public class PublicProfileFragment extends Fragment {
     private TextView locationTextView, professionTextView, screenNameTextView, aboutMeTextView,
             interestsTextView;
 
+    private String email;
     private TimelineRecyclerViewAdapter timelineRecyclerViewAdapter;
     private UserProfile userProfile;
     private List<Post> userPosts = new ArrayList<>();
@@ -52,6 +53,9 @@ public class PublicProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+
+        email = getArguments().getString("email");
+
         setHasOptionsMenu(true);
         context = getActivity();
 
@@ -149,7 +153,7 @@ public class PublicProfileFragment extends Fragment {
 
         ProfileService profileService = retrofit.create(ProfileService.class);
 
-        Call<UserProfile> callFetchUserProfile = profileService.getUserProfile(Session.LoggedEmail);
+        Call<UserProfile> callFetchUserProfile = profileService.getUserProfile(email);
 
         callFetchUserProfile.enqueue(new Callback<UserProfile>() {
 

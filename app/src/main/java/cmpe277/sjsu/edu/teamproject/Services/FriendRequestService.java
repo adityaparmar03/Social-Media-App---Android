@@ -2,6 +2,8 @@ package cmpe277.sjsu.edu.teamproject.Services;
 
 import java.util.List;
 
+import cmpe277.sjsu.edu.teamproject.model.AddFriend;
+import cmpe277.sjsu.edu.teamproject.model.FollowFriend;
 import cmpe277.sjsu.edu.teamproject.model.FriendRequest;
 import cmpe277.sjsu.edu.teamproject.model.FriendRequestConfirmReject;
 import cmpe277.sjsu.edu.teamproject.model.GenericPostResponse;
@@ -20,6 +22,9 @@ public interface FriendRequestService {
     @GET("/fetchSentRequests/{emailid}")
     Call<List<FriendRequest>> fetchSentRequests(@Path("emailid") String emailId);
 
+    @GET("/publicProfiles")
+    Call<List<FriendRequest>> getAllPublicProfiles();
+
     @POST("/confirmPendingFrndRequest")
     Call<GenericPostResponse> confirmPendingFriendRequest(@Body FriendRequestConfirmReject FriendRequestConfirmReject);
 
@@ -28,5 +33,12 @@ public interface FriendRequestService {
 
     @GET("fetchFriendsDtls/{emailid}")
     Call<List<FriendRequest>> fetchFriendsDtls(@Path("emailid") String emailId);
+
+    @POST("/addFrndForExistingUser")
+    Call<GenericPostResponse> addFrndForExistingUser
+            (@Body AddFriend addFriend);
+
+    @POST("/followUser")
+    Call<GenericPostResponse> followUser(@Body FollowFriend followFriend);
 
 }
