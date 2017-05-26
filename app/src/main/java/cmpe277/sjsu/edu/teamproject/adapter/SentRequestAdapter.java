@@ -1,6 +1,11 @@
 package cmpe277.sjsu.edu.teamproject.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +19,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import cmpe277.sjsu.edu.teamproject.R;
+import cmpe277.sjsu.edu.teamproject.fragments.PublicProfileFragment;
 import cmpe277.sjsu.edu.teamproject.model.FriendRequest;
 
 
@@ -49,6 +55,24 @@ public class SentRequestAdapter extends RecyclerView.Adapter<SentRequestAdapter.
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.profileImageView);
+
+        holder.profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
+
+                Fragment profileFragment = new PublicProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("email", model.getEmail());
+                profileFragment.setArguments(bundle);
+
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                fragmentTransaction.add(R.id.content_frame, profileFragment)
+                        .addToBackStack(context.getString(R.string.fragment_tag_public_profile));
+                fragmentTransaction.commit();
+            }
+        });
 
     }
 

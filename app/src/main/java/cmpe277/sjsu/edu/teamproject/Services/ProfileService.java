@@ -18,5 +18,4 @@ public interface ProfileService {
     @POST("/profile/update")
     Call<GenericPostResponse> updateprofile(@Body UpdateProfile updateProfile);
 
-
 }

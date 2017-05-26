@@ -22,7 +22,6 @@ import cmpe277.sjsu.edu.teamproject.R;
 import cmpe277.sjsu.edu.teamproject.Services.FriendRequestService;
 import cmpe277.sjsu.edu.teamproject.adapter.SentRequestAdapter;
 import cmpe277.sjsu.edu.teamproject.model.FriendRequest;
-import cmpe277.sjsu.edu.teamproject.model.Session;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -87,7 +86,7 @@ public class SentRequestsFragment extends Fragment {
 
         FriendRequestService friendRequestService = retrofit.create(FriendRequestService.class);
 
-        Call<List<FriendRequest>> callFetchSentRequests = friendRequestService.fetchSentRequests(Session.LoggedEmail);
+        Call<List<FriendRequest>> callFetchSentRequests = friendRequestService.getAllPublicProfiles();
 
         callFetchSentRequests.enqueue(new Callback<List<FriendRequest>>() {
             @Override

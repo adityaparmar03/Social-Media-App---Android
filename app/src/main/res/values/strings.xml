@@ -27,7 +27,7 @@
 
     <!--FRIEND REQS FRAGMENT -->
     <string name="friend_requests">Friend Requests</string>
-    <string name="sent_requests">Sent Requests</string>
+    <string name="sent_requests">Browse Profiles</string>
     <string name="all_friends">All Friends</string>
     <string name="confirm">Confirm</string>
     <string name="delete">Delete</string>
