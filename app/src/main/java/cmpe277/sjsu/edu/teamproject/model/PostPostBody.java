@@ -16,6 +16,11 @@ public class PostPostBody {
     @Expose
     private String mediaURL;
 
+    private String screenname;
+    private String profile_pic;
+
+
+
     public String getContent() {
         return content;
     }
@@ -38,5 +43,20 @@ public class PostPostBody {
 
     public void setMediaURL(String mediaURL) {
         this.mediaURL = mediaURL;
+    }
+    public String getScreenname() {
+        return screenname;
+    }
+
+    public void setScreenname(String screenname) {
+        this.screenname = screenname;
+    }
+
+    public String getProfile_pic() {
+        return profile_pic;
+    }
+
+    public void setProfile_pic(String profile_pic) {
+        this.profile_pic = profile_pic;
     }
 }

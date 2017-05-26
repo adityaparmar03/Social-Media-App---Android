@@ -133,13 +133,28 @@
                 android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/profile_image_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
     </ScrollView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonupdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

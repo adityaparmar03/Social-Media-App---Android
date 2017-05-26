@@ -242,6 +242,8 @@ public class CreatePostFragment extends Fragment {
         postPostBody.setEmailId(Session.LoggedEmail);
         postPostBody.setContent(content.getText().toString());
         postPostBody.setMediaURL(s3ImageURL);
+        postPostBody.setScreenname("");
+        postPostBody.setProfile_pic("");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))

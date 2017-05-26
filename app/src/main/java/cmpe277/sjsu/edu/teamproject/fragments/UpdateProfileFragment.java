@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -40,6 +41,7 @@ import java.util.Random;
 import cmpe277.sjsu.edu.teamproject.R;
 import cmpe277.sjsu.edu.teamproject.Services.ProfileService;
 import cmpe277.sjsu.edu.teamproject.model.GenericPostResponse;
+import cmpe277.sjsu.edu.teamproject.model.Session;
 import cmpe277.sjsu.edu.teamproject.model.UpdateProfile;
 import cmpe277.sjsu.edu.teamproject.model.UserProfile;
 import retrofit2.Call;
@@ -84,6 +86,8 @@ public class UpdateProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.update_profile_fragment, container, false);
         setHasOptionsMenu(true);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         context = getActivity();
 
@@ -123,6 +127,14 @@ public class UpdateProfileFragment extends Fragment {
 
         TextView textView = (TextView) actionView.findViewById(R.id.title);
         textView.setText(getString(R.string.update_profile));
+
+        Button update = (Button)getActivity().findViewById(R.id.buttonupdate);
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setData();
+            }
+        });
     }
 
     private void setData()
@@ -134,6 +146,7 @@ public class UpdateProfileFragment extends Fragment {
         EditText interest = (EditText) getActivity().findViewById(R.id.tx_update_profile_interest);
 
         UpdateProfile updateProfile = new UpdateProfile();
+        updateProfile.setEmailid(Session.LoggedEmail);
         updateProfile.setScreenName(screenName.getText().toString());
         updateProfile.setLocation(location.getText().toString());
         updateProfile.setProfession(profession.getText().toString());
@@ -157,7 +170,10 @@ public class UpdateProfileFragment extends Fragment {
                 switch (response.body().getStatus()) {
 
                     case "200":
-                        Toast.makeText(getActivity(), "Account Created Succeessfully, Please LogIN", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Profile Successfully Updated.", Toast.LENGTH_LONG).show();
+                        break;
+                    case "300":
+                        Toast.makeText(getActivity(), "Duplicate Screen Name.", Toast.LENGTH_LONG).show();
                         break;
 
                     default:
@@ -217,7 +233,7 @@ public class UpdateProfileFragment extends Fragment {
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), selectedImage);
-                    mImageView = (ImageView)getActivity().findViewById(R.id.post_image_imageview);
+                    mImageView = (ImageView)getActivity().findViewById(R.id.profile_image_imageview);
                     mImageView.setImageBitmap(bitmap);
                     mImageView.setMaxHeight(bitmap.getHeight());
                     mImageView.setMaxWidth(bitmap.getWidth());

@@ -15,7 +15,7 @@ public interface ProfileService {
     @GET("/getUserProfile/{emailid}")
     Call<UserProfile> getUserProfile(@Path("emailid") String emailId);
 
-    @POST("/profile/update")
+    @POST("/updateprofile")
     Call<GenericPostResponse> updateprofile(@Body UpdateProfile updateProfile);
 
 

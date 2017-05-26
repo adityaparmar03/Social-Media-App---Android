@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(null);
-        Toast.makeText(this, Session.LoggedEmail,Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, Session.LoggedEmail,Toast.LENGTH_LONG).show();
         init();
     }
 
@@ -87,4 +87,6 @@ public class MainActivity extends AppCompatActivity{
         startActivity(i);
         finish();
     }
+
+
 }
