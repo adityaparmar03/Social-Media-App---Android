@@ -13,8 +13,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import cmpe277.sjsu.edu.teamproject.R;
+import cmpe277.sjsu.edu.teamproject.Services.ProfileService;
 import cmpe277.sjsu.edu.teamproject.fragments.TabFragment;
+import cmpe277.sjsu.edu.teamproject.model.BasicProfile;
 import cmpe277.sjsu.edu.teamproject.model.Session;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -53,22 +60,48 @@ public class MainActivity extends AppCompatActivity{
         }
         didSetSharedPreference();
     }
-    public Boolean didSetSharedPreference() {
+    public void didSetSharedPreference() {
 
         try{
-            SharedPreferences sharedPreferences = getSharedPreferences("logindata", Context.MODE_PRIVATE);
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("screenName","");
-            editor.putString("profileUri","https://s3-us-west-2.amazonaws.com/cmpe277/POST20170525_112442288506");
 
-            editor.apply();
 
-            return true;
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            ProfileService profileService = retrofit.create(ProfileService.class);
+
+            Call<BasicProfile> callBasicProfile = profileService.getBasicUserProfile(Session.LoggedEmail);
+
+            callBasicProfile.enqueue(new Callback<BasicProfile>() {
+                @Override
+                public void onResponse(Call<BasicProfile> call, Response<BasicProfile> response) {
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("logindata", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("screenName",response.body().getScreenname());
+                    editor.putString("profileUri",response.body().getProfile_pic());
+
+                    Session.ScreenName = response.body().getScreenname();
+                    Session.Profilepic = response.body().getProfile_pic();
+
+                    editor.apply();
+                }
+
+                @Override
+                public void onFailure(Call<BasicProfile> call, Throwable t) {
+
+                }
+            });
+
+
 
         } catch (Exception e) {
 
-            return false;
+
         }
 
     }
@@ -87,6 +120,7 @@ public class MainActivity extends AppCompatActivity{
         startActivity(i);
         finish();
     }
+
 
 
 }
