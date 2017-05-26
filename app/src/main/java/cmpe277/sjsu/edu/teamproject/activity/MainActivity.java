@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity{
             SharedPreferences sharedPreferences = getSharedPreferences("logindata", Context.MODE_PRIVATE);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("screenName","Aditya Parmar");
+            editor.putString("screenName","");
             editor.putString("profileUri","https://s3-us-west-2.amazonaws.com/cmpe277/POST20170525_112442288506");
 
             editor.apply();

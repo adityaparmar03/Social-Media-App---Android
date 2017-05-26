@@ -19,7 +19,7 @@ public class Post {
     @Expose
     private String mediaURL;
 
-    @SerializedName("contents")
+    @SerializedName("content")
     @Expose
     private String content;
 
