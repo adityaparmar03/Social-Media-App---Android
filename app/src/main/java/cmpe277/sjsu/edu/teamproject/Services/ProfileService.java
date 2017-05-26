@@ -1,6 +1,7 @@
 package cmpe277.sjsu.edu.teamproject.Services;
 
 
+import cmpe277.sjsu.edu.teamproject.model.BasicProfile;
 import cmpe277.sjsu.edu.teamproject.model.GenericPostResponse;
 import cmpe277.sjsu.edu.teamproject.model.UpdateProfile;
 import cmpe277.sjsu.edu.teamproject.model.UserProfile;
@@ -17,5 +18,8 @@ public interface ProfileService {
 
     @POST("/updateprofile")
     Call<GenericPostResponse> updateprofile(@Body UpdateProfile updateProfile);
+
+    @GET("/getBasicUserProfile/{emailid}")
+    Call<BasicProfile> getBasicUserProfile(@Path("emailid") String emailId);
 
 }

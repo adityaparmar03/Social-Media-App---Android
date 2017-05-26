@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blu Dragon</string>
+    <string name="app_name">FBDroid</string>
 
     <!--SIGNIN ACTIVITY -->
     <string name="sign_in_text">Sign in</string>

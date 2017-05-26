@@ -221,13 +221,14 @@ public class CreatePostFragment extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("logindata", Context.MODE_PRIVATE);
         String screenName = sharedPreferences.getString("screenName","");
+        String profilepic = sharedPreferences.getString("profileUri","");
 
         txtscreenname.setText(screenName);
 
 
 
         Glide.with(this)
-                .load("https://s3-us-west-2.amazonaws.com/cmpe277/POST20170525_112442288506")
+                .load(profilepic)
                 .error(R.mipmap.ic_launcher)
                 .into(imageView);
 
