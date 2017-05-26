@@ -99,14 +99,6 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-
-
-
-
-
-
-
-
         } catch (Exception e) {
 
 
@@ -128,7 +120,6 @@ public class MainActivity extends AppCompatActivity{
         startActivity(i);
         finish();
     }
-
 
 
 
