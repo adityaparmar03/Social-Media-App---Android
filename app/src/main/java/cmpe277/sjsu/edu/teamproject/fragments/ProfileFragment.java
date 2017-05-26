@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
 
     private ImageView profilePicImageView;
     private TextView locationTextView, professionTextView, screenNameTextView, aboutMeTextView,
-            interestsTextView;
+            interestsTextView,emailTextview;
 
     private TimelineRecyclerViewAdapter timelineRecyclerViewAdapter;
     private UserProfile userProfile;
@@ -87,6 +87,9 @@ public class ProfileFragment extends Fragment {
         aboutMeTextView = (TextView) profileHeaderView.findViewById(R.id.about_me_textview);
         interestsTextView = (TextView) profileHeaderView.findViewById(R.id.interests_textview);
         screenNameTextView = (TextView) profileHeaderView.findViewById(R.id.screen_name_textview);
+        emailTextview = (TextView) profileHeaderView.findViewById(R.id.email_id_textview);
+        emailTextview.setText(Session.LoggedEmail);
+
 
         View optionOneLayout = view.findViewById(R.id.option_one_layout);
         optionOneLayout.setVisibility(View.INVISIBLE);
