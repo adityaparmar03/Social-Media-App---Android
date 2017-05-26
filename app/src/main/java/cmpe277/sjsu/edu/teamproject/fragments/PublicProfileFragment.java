@@ -53,6 +53,8 @@ public class PublicProfileFragment extends Fragment {
     private UserProfile userProfile;
     private List<Post> userPosts = new ArrayList<>();
 
+    private  RecyclerView recyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -193,11 +195,11 @@ public class PublicProfileFragment extends Fragment {
         });
 
         // user posts
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
 
-        timelineRecyclerViewAdapter = new TimelineRecyclerViewAdapter(context, userPosts);
-        recyclerView.setAdapter(timelineRecyclerViewAdapter);
+//        timelineRecyclerViewAdapter = new TimelineRecyclerViewAdapter(context, userPosts);
+//        recyclerView.setAdapter(timelineRecyclerViewAdapter);
     }
 
     @Override
@@ -244,7 +246,11 @@ public class PublicProfileFragment extends Fragment {
                         .into(profilePicImageView);
 
                 userPosts = userProfile.getPosts();
-                timelineRecyclerViewAdapter.notifyDataSetChanged();
+//                timelineRecyclerViewAdapter.notifyDataSetChanged();
+//                recyclerView.setAdapter(timelineRecyclerViewAdapter);
+
+                timelineRecyclerViewAdapter = new TimelineRecyclerViewAdapter(context, userPosts);
+                recyclerView.setAdapter(timelineRecyclerViewAdapter);
             }
 
             @Override
