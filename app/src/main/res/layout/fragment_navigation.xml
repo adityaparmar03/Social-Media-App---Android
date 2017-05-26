@@ -24,7 +24,7 @@
             android:layout_gravity="center_vertical"
             android:drawablePadding="4dp"
             android:padding="8dp"
-            android:text="Screen Name"
+            android:text="Profile"
             android:textSize="18sp" />
 
     </LinearLayout>

@@ -1,8 +1,5 @@
 package cmpe277.sjsu.edu.teamproject.fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -65,6 +62,8 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
 
         TextView textView = (TextView) view.findViewById(R.id.title);
         textView.setText(getString(R.string.app_options));
+
+
     }
 
     @Override

@@ -46,7 +46,7 @@ public class PublicProfileFragment extends Fragment {
 
     private ImageView profilePicImageView;
     private TextView locationTextView, professionTextView, screenNameTextView, aboutMeTextView,
-            interestsTextView;
+            interestsTextView,emailTextview;
 
     private String email;
     private TimelineRecyclerViewAdapter timelineRecyclerViewAdapter;
@@ -83,6 +83,7 @@ public class PublicProfileFragment extends Fragment {
         aboutMeTextView = (TextView) profileHeaderView.findViewById(R.id.about_me_textview);
         interestsTextView = (TextView) profileHeaderView.findViewById(R.id.interests_textview);
         screenNameTextView = (TextView) profileHeaderView.findViewById(R.id.screen_name_textview);
+        emailTextview = (TextView) profileHeaderView.findViewById(R.id.email_id_textview);
 
         // follow
         View viewFollow = view.findViewById(R.id.option_one_layout);
@@ -239,6 +240,7 @@ public class PublicProfileFragment extends Fragment {
                 aboutMeTextView.setText(getString(R.string.about_me, userProfile.getAboutMe()));
                 interestsTextView.setText(getString(R.string.interests, userProfile.getInterests()));
                 screenNameTextView.setText(userProfile.getScreenName());
+                emailTextview.setText(userProfile.getEmailId());
 
                 Glide.with(context)
                         .load(userProfile.getProfileImageURL())
