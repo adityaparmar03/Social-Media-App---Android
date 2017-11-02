@@ -11,27 +11,27 @@ As can be seen from the diagram below, the android app communicates with our Nod
 
 2.	Technology choices
 
-●	Followed Google’s Material Design Guidelines for our UI.
-●	The entire UI is built using Fragments against using too many activities to keep it light on memory.
-●	We used Retrofit by Square against using Volley for making the calls to the REST services of our app due its performance advantage.
-●	We have used Android drawables and styling for achieving the same, keeping the apk size low and faster on loading.
-●	We used Amazon’s S3 bucket for storing the app’s images and then stored them in our document store, which is MongoDB.
-●	We have written our services, in NodeJS, using ExpressJS as our backend framework.
-●	Used Glide for image caching and retrieval.
+	Followed Google’s Material Design Guidelines for our UI.
+	The entire UI is built using Fragments against using too many activities to keep it light on memory.
+	We used Retrofit by Square against using Volley for making the calls to the REST services of our app due its performance advantage.
+	We have used Android drawables and styling for achieving the same, keeping the apk size low and faster on loading.
+	We used Amazon’s S3 bucket for storing the app’s images and then stored them in our document store, which is MongoDB.
+	We have written our services, in NodeJS, using ExpressJS as our backend framework.
+	Used Glide for image caching and retrieval.
 
 3.	Features 
 
-●	Signup and Authentication 
+	Signup and Authentication 
 This feature is implemented to facilitate user with the signup and then sign in. When a new user signs up for the app, he is required to give email and password. A four digit OTP is mailed to the users’ email Id for verification. Now when users click on sign up button he is prompted to enter the verification code and allowed to login the application. 
 
-
+![Alt text](/snapshot/Picture2.png?raw=true "Optional Title")
 
 
 
 ●	Profile Management
 Every application user has his profile. The user is facilitated to update the profile fields like ‘aboutme’, ‘profession’, ‘interests’, ‘location’, ‘Screenname’. Along with this he can also update the profile picture. Profile picture is stored in S3 buckets and the link to the image is stored in mongoDB database. The screen name of every user is ensured to be unique. User can also choose to browse the public profiles and users in his friend list.
 
-
+![Alt text](/snapshot/Picture3.png?raw=true "Optional Title")
 
 
 
@@ -39,7 +39,7 @@ Every application user has his profile. The user is facilitated to update the pr
 User is provisioned to update the settings like visibility, notification and offline. User can toggle to make choices among the options. Depending on his configuration the user will be public/friendsonly, online/offline, notification turned on/off.
 
 
-
+![Alt text](/snapshot/Picture4.png?raw=true "Optional Title")
 
 
 
@@ -52,7 +52,7 @@ User can browse for friends and send friend requests or follow them. User can se
 
 
 
-
+![Alt text](/snapshot/Picture5.png?raw=true "Optional Title")
 
 
 
@@ -63,7 +63,7 @@ User is capable of adding a post. Post may consist of text content or image or b
 
 
 
-
+![Alt text](/snapshot/Picture6.png?raw=true "Optional Title")
 
 
 
@@ -77,7 +77,7 @@ User is capable of adding a post. Post may consist of text content or image or b
 User has an option to follow another user. Follower sees all the posts of the followee. 
 
 
-
+![Alt text](/snapshot/Picture7.png?raw=true "Optional Title")
 
 
 
@@ -90,7 +90,7 @@ User has an option to follow another user. Follower sees all the posts of the fo
 Timeline is the landing page of the application. Timeline shows all the posts of friends and followee. Posts are seen in chronological order where recent posts are seen on the top.   
 
 
-
+![Alt text](/snapshot/Picture8.png?raw=true "Optional Title")
 
   
 	
