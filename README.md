@@ -24,24 +24,23 @@ As can be seen from the diagram below, the android app communicates with our Nod
 	Signup and Authentication 
 This feature is implemented to facilitate user with the signup and then sign in. When a new user signs up for the app, he is required to give email and password. A four digit OTP is mailed to the users’ email Id for verification. Now when users click on sign up button he is prompted to enter the verification code and allowed to login the application. 
 
-![Alt text](/snapshot/Picture2.png?raw=true "Optional Title")
 
+<img src="/snapshot/Picture2.png" width="400px" height="600px"/>
 
 
 ●	Profile Management
 Every application user has his profile. The user is facilitated to update the profile fields like ‘aboutme’, ‘profession’, ‘interests’, ‘location’, ‘Screenname’. Along with this he can also update the profile picture. Profile picture is stored in S3 buckets and the link to the image is stored in mongoDB database. The screen name of every user is ensured to be unique. User can also choose to browse the public profiles and users in his friend list.
 
-![Alt text](/snapshot/Picture3.png?raw=true "Optional Title")
 
+<img src="/snapshot/Picture3.png" width="400px" height="600px"/>
 
 
 ●	Settings
 User is provisioned to update the settings like visibility, notification and offline. User can toggle to make choices among the options. Depending on his configuration the user will be public/friendsonly, online/offline, notification turned on/off.
 
 
-![Alt text](/snapshot/Picture4.png?raw=true "Optional Title")
 
-
+<img src="/snapshot/Picture4.png" width="400px" height="600px"/>
 
 
 
@@ -52,10 +51,8 @@ User can browse for friends and send friend requests or follow them. User can se
 
 
 
-![Alt text](/snapshot/Picture5.png?raw=true "Optional Title")
 
-
-
+<img src="/snapshot/Picture5.png" width="400px" height="600px"/>
 
 
 ●	Post Management
@@ -63,9 +60,8 @@ User is capable of adding a post. Post may consist of text content or image or b
 
 
 
-![Alt text](/snapshot/Picture7.png?raw=true "Optional Title")
 
-
+<img src="/snapshot/Picture7.png" width="400px" height="600px"/>
 
 
 
@@ -77,9 +73,8 @@ User is capable of adding a post. Post may consist of text content or image or b
 User has an option to follow another user. Follower sees all the posts of the followee. 
 
 
-![Alt text](/snapshot/Picture8.png?raw=true "Optional Title")
 
-
+<img src="/snapshot/Picture8.png" width="400px" height="600px"/>
 
 
 
@@ -90,7 +85,6 @@ User has an option to follow another user. Follower sees all the posts of the fo
 Timeline is the landing page of the application. Timeline shows all the posts of friends and followee. Posts are seen in chronological order where recent posts are seen on the top.   
 
 
-![Alt text](/snapshot/Picture9.png?raw=true "Optional Title")
 
-  
+<img src="/snapshot/Picture9.png" width="400px" height="600px"/>
 	
