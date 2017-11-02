@@ -63,7 +63,7 @@ User is capable of adding a post. Post may consist of text content or image or b
 
 
 
-![Alt text](/snapshot/Picture6.png?raw=true "Optional Title")
+![Alt text](/snapshot/Picture7.png?raw=true "Optional Title")
 
 
 
@@ -77,7 +77,7 @@ User is capable of adding a post. Post may consist of text content or image or b
 User has an option to follow another user. Follower sees all the posts of the followee. 
 
 
-![Alt text](/snapshot/Picture7.png?raw=true "Optional Title")
+![Alt text](/snapshot/Picture8.png?raw=true "Optional Title")
 
 
 
@@ -90,7 +90,7 @@ User has an option to follow another user. Follower sees all the posts of the fo
 Timeline is the landing page of the application. Timeline shows all the posts of friends and followee. Posts are seen in chronological order where recent posts are seen on the top.   
 
 
-![Alt text](/snapshot/Picture8.png?raw=true "Optional Title")
+![Alt text](/snapshot/Picture9.png?raw=true "Optional Title")
 
   
 	
